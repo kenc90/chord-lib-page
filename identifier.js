@@ -513,6 +513,9 @@ function pinChord(root, chordType) {
 
     // Highlight the active suggestion card
     highlightSuggestionCard(root, chordType);
+
+    // Scroll to top so user can see the fretboard result
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // Cancel pinned preview and restore original notes

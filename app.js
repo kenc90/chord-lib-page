@@ -540,8 +540,42 @@ function renderChordCard(chord) {
 function renderCategory(category) {
     const container = document.getElementById('chords-container');
     if (category === 'all') {
-        const allChords = Object.values(CHORDS).flat();
-        container.innerHTML = allChords.map(renderChordCard).join('');
+        const NOTE_ORDER = { 'C': 0, 'C#': 1, 'D': 2, 'Eb': 3, 'E': 4, 'F': 5, 'F#': 6, 'G': 7, 'Ab': 8, 'A': 9, 'Bb': 10, 'B': 11 };
+        const CATEGORY_ORDER = ['major', 'minor', 'seventh', 'major7', 'minor7', 'diminished', 'augmented', 'sus2', 'sus4'];
+
+        const allChords = [];
+        for (const [cat, chords] of Object.entries(CHORDS)) {
+            chords.forEach(chord => {
+                allChords.push({ chord, category: cat });
+            });
+        }
+
+        allChords.sort((a, b) => {
+            const noteA = a.chord.name.match(/^([A-G][#b]?)/)?.[1] || '';
+            const noteB = b.chord.name.match(/^([A-G][#b]?)/)?.[1] || '';
+
+            const rootIndexA = NOTE_ORDER[noteA] ?? 99;
+            const rootIndexB = NOTE_ORDER[noteB] ?? 99;
+
+            if (rootIndexA !== rootIndexB) return rootIndexA - rootIndexB;
+
+            const catIndexA = CATEGORY_ORDER.indexOf(a.category);
+            const catIndexB = CATEGORY_ORDER.indexOf(b.category);
+            return (catIndexA === -1 ? 99 : catIndexA) - (catIndexB === -1 ? 99 : catIndexB);
+        });
+
+        // Group by note and render with section headers
+        let html = '';
+        let currentNote = '';
+        for (const item of allChords) {
+            const note = item.chord.name.match(/^([A-G][#b]?)/)?.[1] || '';
+            if (note !== currentNote) {
+                currentNote = note;
+                html += `<div class="chord-section-header">${note}</div>`;
+            }
+            html += renderChordCard(item.chord);
+        }
+        container.innerHTML = html;
     } else {
         const chords = CHORDS[category] || [];
         container.innerHTML = chords.map(renderChordCard).join('');
@@ -601,6 +635,16 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeVoicingsModal();
+    }
+});
+
+// Scroll to top button visibility
+const scrollToTopBtn = document.getElementById('scroll-to-top');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        scrollToTopBtn.classList.add('visible');
+    } else {
+        scrollToTopBtn.classList.remove('visible');
     }
 });
 

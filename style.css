@@ -104,6 +104,22 @@ header h1 {
     margin: 0 auto;
 }
 
+/* Chord Section Header (All view) */
+.chord-section-header {
+    grid-column: 1 / -1;
+    color: #e94560;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 1rem 0 0.25rem;
+    margin-top: 0.5rem;
+    border-bottom: 2px solid rgba(233, 69, 96, 0.4);
+    letter-spacing: 0.05em;
+}
+
+.chord-section-header:first-child {
+    margin-top: 0;
+}
+
 /* Chord Card */
 .chord-card {
     background: rgba(255, 255, 255, 0.05);
@@ -346,4 +362,43 @@ footer {
     .chords-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    background: #e94560;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 900;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background: #d63851;
+    box-shadow: 0 6px 20px rgba(233, 69, 96, 0.6);
+    transform: translateY(-2px);
+}
+
+.scroll-to-top:active {
+    transform: translateY(0);
 }
