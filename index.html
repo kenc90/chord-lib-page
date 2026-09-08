@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar Chords Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🎸 Guitar Chords Library</h1>
+        <p class="subtitle">All the chords you need, at your fingertips</p>
+    </header>
+
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Chord Library</a>
+        <a href="identifier.html" class="nav-link">Chord Identifier</a>
+        <a href="circle.html" class="nav-link">Circle of Fifths</a>
+    </nav>
+
+    <nav class="categories">
+        <button class="category-btn active" data-category="major">Major</button>
+        <button class="category-btn" data-category="minor">Minor</button>
+        <button class="category-btn" data-category="seventh">7th</button>
+        <button class="category-btn" data-category="major7">Maj7</button>
+        <button class="category-btn" data-category="minor7">m7</button>
+        <button class="category-btn" data-category="diminished">Dim</button>
+        <button class="category-btn" data-category="augmented">Aug</button>
+        <button class="category-btn" data-category="sus2">Sus2</button>
+        <button class="category-btn" data-category="sus4">Sus4</button>
+        <button class="category-btn" data-category="all">All</button>
+    </nav>
+
+    <main id="chords-container" class="chords-grid">
+        <!-- Chords will be rendered here by JavaScript -->
+    </main>
+
+    <!-- Voicings Modal -->
+    <div id="voicings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-chord-name">Chord Shapes</h2>
+                <button class="modal-close" onclick="closeVoicingsModal()">&times;</button>
+            </div>
+            <div id="modal-voicings" class="modal-body">
+                <!-- Voicings will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Guitar Chords Library &copy; 2026</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

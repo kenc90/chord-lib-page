@@ -1,0 +1,589 @@
+/* Circle Container */
+.circle-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem 2rem;
+}
+
+/* Controls Panel */
+.controls-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.control-group label {
+    color: #f5a623;
+    font-weight: 600;
+    font-size: 1rem;
+    min-width: 50px;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.key-btn,
+.mode-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: #a0a0a0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.key-btn:hover,
+.mode-btn:hover {
+    border-color: rgba(245, 166, 35, 0.5);
+    color: #f5a623;
+    background: rgba(245, 166, 35, 0.1);
+}
+
+.key-btn.active {
+    border-color: #e94560;
+    background: #e94560;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(233, 69, 96, 0.4);
+}
+
+.mode-btn.active {
+    border-color: #f5a623;
+    background: #f5a623;
+    color: #1a1a2e;
+    box-shadow: 0 2px 10px rgba(245, 166, 35, 0.4);
+}
+
+/* Circle Wrapper */
+.circle-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+#circle-svg {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+
+/* SVG Circle Styles */
+.circle-outer-ring {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 1;
+}
+
+.circle-inner-ring {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1;
+}
+
+.circle-segment {
+    fill: rgba(255, 255, 255, 0.03);
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.circle-segment:hover {
+    fill: rgba(245, 166, 35, 0.15);
+}
+
+.circle-segment.active {
+    fill: rgba(233, 69, 96, 0.3);
+    stroke: #e94560;
+    stroke-width: 2;
+}
+
+.circle-segment.scale-note {
+    fill: rgba(76, 175, 80, 0.15);
+    stroke: rgba(76, 175, 80, 0.4);
+}
+
+.circle-segment.active.scale-note {
+    fill: rgba(233, 69, 96, 0.3);
+    stroke: #e94560;
+}
+
+.circle-segment.relative-minor {
+    fill: rgba(245, 166, 35, 0.15);
+    stroke: rgba(245, 166, 35, 0.4);
+}
+
+.circle-note-text {
+    fill: #888;
+    font-size: 16px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+
+.circle-note-text.active {
+    fill: #e94560;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.circle-note-text.scale-note {
+    fill: #4caf50;
+}
+
+.circle-note-text.active.scale-note {
+    fill: #e94560;
+}
+
+.circle-chord-text {
+    fill: #666;
+    font-size: 11px;
+    font-weight: 500;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+
+.circle-chord-text.active {
+    fill: #f5a623;
+}
+
+.circle-chord-text.scale-note {
+    fill: #888;
+}
+
+.circle-center-text {
+    fill: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+.circle-center-sub {
+    fill: #f5a623;
+    font-size: 12px;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+.circle-line {
+    stroke: rgba(255, 255, 255, 0.06);
+    stroke-width: 1;
+}
+
+/* Info Panel */
+.info-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.info-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.info-section:first-child {
+    grid-column: 1 / -1;
+}
+
+.description-section {
+    grid-column: 1 / -1;
+}
+
+.info-section h3 {
+    color: #f5a623;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+#scale-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+}
+
+#scale-title .key-name {
+    color: #e94560;
+}
+
+/* Mood descriptions */
+.key-mood,
+.mode-mood,
+.song-examples {
+    margin-bottom: 1rem;
+}
+
+.mood-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    line-height: 1.6;
+}
+
+.mood-character {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.mood-text {
+    color: #c0c0c0;
+    font-size: 0.95rem;
+}
+
+.mood-text strong {
+    color: #f5a623;
+}
+
+/* Scale Notes */
+.scale-notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.scale-note-chip {
+    background: rgba(233, 69, 96, 0.15);
+    border: 1px solid rgba(233, 69, 96, 0.4);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    min-width: 50px;
+}
+
+.scale-note-chip .degree {
+    display: block;
+    font-size: 0.7rem;
+    color: #888;
+    margin-top: 0.2rem;
+    font-weight: 400;
+}
+
+.scale-note-chip.root {
+    background: rgba(233, 69, 96, 0.3);
+    border-color: #e94560;
+    box-shadow: 0 0 10px rgba(233, 69, 96, 0.3);
+}
+
+/* Diatonic Chords */
+.diatonic-chords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.diatonic-chord {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    min-width: 70px;
+    transition: all 0.2s ease;
+}
+
+.diatonic-chord:hover {
+    border-color: rgba(245, 166, 35, 0.4);
+    background: rgba(245, 166, 35, 0.1);
+}
+
+.diatonic-chord .chord-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #e94560;
+}
+
+.diatonic-chord .chord-degree {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.3rem;
+}
+
+.diatonic-chord .chord-type {
+    font-size: 0.7rem;
+    color: #f5a623;
+    margin-top: 0.1rem;
+}
+
+.diatonic-chord.tonic {
+    border-color: rgba(233, 69, 96, 0.5);
+    box-shadow: 0 0 10px rgba(233, 69, 96, 0.2);
+}
+
+.diatonic-chord.dominant {
+    border-color: rgba(245, 166, 35, 0.4);
+}
+
+.diatonic-chord.subdominant {
+    border-color: rgba(76, 175, 80, 0.4);
+}
+
+/* Relationships */
+.relationships {
+    color: #a0a0a0;
+    line-height: 2;
+}
+
+.relationship-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.relationship-item .rel-label {
+    color: #888;
+    min-width: 120px;
+}
+
+.relationship-item .rel-value {
+    color: #f5a623;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .info-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .controls-panel {
+        gap: 1rem;
+    }
+
+    .key-btn,
+    .mode-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    #circle-svg {
+        max-width: 350px;
+    }
+
+    .circle-note-text {
+        font-size: 13px;
+    }
+
+    .circle-note-text.active {
+        font-size: 14px;
+    }
+
+    .circle-chord-text {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 480px) {
+    .control-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #circle-svg {
+        max-width: 300px;
+    }
+}
+
+/* Clickable diatonic chords */
+.diatonic-chord {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.diatonic-chord:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(233, 69, 96, 0.3);
+    border-color: rgba(233, 69, 96, 0.5);
+}
+
+/* Song example links */
+.song-link {
+    color: #f5a623;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(245, 166, 35, 0.5);
+    transition: all 0.2s ease;
+}
+
+.song-link:hover {
+    color: #e94560;
+    border-bottom-color: #e94560;
+}
+
+/* Chord Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header h2 {
+    color: #e94560;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e94560;
+}
+
+.modal-body {
+    color: #fff;
+}
+
+/* Chord shape display in modal */
+.chord-shape-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.chord-shape-display .chord-diagram {
+    width: 180px;
+    height: auto;
+}
+
+.chord-info {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.chord-frets,
+.chord-fingers {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    color: #c0c0c0;
+    margin-bottom: 0.5rem;
+}
+
+.chord-frets:last-child,
+.chord-fingers:last-child {
+    margin-bottom: 0;
+}
+
+/* Chord diagram SVG styles for modal */
+.chord-diagram .nut {
+    stroke: #ccc;
+    stroke-width: 4;
+}
+
+.chord-diagram .fret {
+    stroke: #555;
+    stroke-width: 1;
+}
+
+.chord-diagram .string {
+    stroke: #888;
+    stroke-width: 1;
+}
+
+.chord-diagram .finger {
+    fill: #e94560;
+    stroke: #fff;
+    stroke-width: 1;
+}
+
+.chord-diagram .finger-text {
+    fill: #fff;
+    font-size: 9px;
+    text-anchor: middle;
+    dominant-baseline: central;
+    font-weight: bold;
+}
+
+.chord-diagram .open-string {
+    fill: none;
+    stroke: #0f0;
+    stroke-width: 2;
+}
+
+.chord-diagram .muted-string {
+    stroke: #f00;
+    stroke-width: 2;
+}
+
+.chord-diagram .barre {
+    fill: #e94560;
+    opacity: 0.9;
+}
+
+.chord-diagram .fret-number {
+    fill: #f5a623;
+    font-size: 10px;
+    font-weight: bold;
+}

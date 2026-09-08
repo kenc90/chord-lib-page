@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle of Fifths - Guitar Chords Library</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="circle.css">
+</head>
+<body>
+    <header>
+        <h1>🎸 Circle of Fifths</h1>
+        <p class="subtitle">Explore keys, modes, and chord relationships</p>
+    </header>
+
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link">Chord Library</a>
+        <a href="identifier.html" class="nav-link">Chord Identifier</a>
+        <a href="circle.html" class="nav-link active">Circle of Fifths</a>
+    </nav>
+
+    <main class="circle-container">
+        <div class="controls-panel">
+            <div class="control-group">
+                <label>Key:</label>
+                <div class="button-group" id="key-buttons">
+                    <button class="key-btn active" data-key="0">C</button>
+                    <button class="key-btn" data-key="1">C#</button>
+                    <button class="key-btn" data-key="2">D</button>
+                    <button class="key-btn" data-key="3">Eb</button>
+                    <button class="key-btn" data-key="4">E</button>
+                    <button class="key-btn" data-key="5">F</button>
+                    <button class="key-btn" data-key="6">F#</button>
+                    <button class="key-btn" data-key="7">G</button>
+                    <button class="key-btn" data-key="8">Ab</button>
+                    <button class="key-btn" data-key="9">A</button>
+                    <button class="key-btn" data-key="10">Bb</button>
+                    <button class="key-btn" data-key="11">B</button>
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Mode:</label>
+                <div class="button-group" id="mode-buttons">
+                    <button class="mode-btn active" data-mode="0">Ionian</button>
+                    <button class="mode-btn" data-mode="1">Dorian</button>
+                    <button class="mode-btn" data-mode="2">Phrygian</button>
+                    <button class="mode-btn" data-mode="3">Lydian</button>
+                    <button class="mode-btn" data-mode="4">Mixolydian</button>
+                    <button class="mode-btn" data-mode="5">Aeolian</button>
+                    <button class="mode-btn" data-mode="6">Locrian</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="circle-wrapper">
+            <svg id="circle-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                <!-- Circle of fifths will be rendered by JavaScript -->
+            </svg>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-section">
+                <h3>Scale Notes</h3>
+                <div class="scale-notes" id="scale-notes">
+                    <!-- Scale notes will be rendered here -->
+                </div>
+            </div>
+            <div class="info-section">
+                <h3>Diatonic Chords</h3>
+                <div class="diatonic-chords" id="diatonic-chords">
+                    <!-- Diatonic chords will be rendered here -->
+                </div>
+            </div>
+            <div class="info-section">
+                <h3>Key Relationships</h3>
+                <div class="relationships" id="relationships">
+                    <!-- Relative key info will be rendered here -->
+                </div>
+            </div>
+            <div class="info-section description-section">
+                <h3 id="scale-title">C Major (Ionian)</h3>
+                <div class="key-mood" id="key-mood">
+                    <!-- Key character and mood -->
+                </div>
+                <div class="mode-mood" id="mode-mood">
+                    <!-- Mode mood and description -->
+                </div>
+                <div class="song-examples" id="song-examples">
+                    <!-- Song examples -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Guitar Chords Library &copy; 2026</p>
+    </footer>
+
+    <!-- Chord Shape Modal -->
+    <div id="chord-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="chord-modal-title">Chord Shape</h2>
+                <button class="modal-close" onclick="closeChordModal()">&times;</button>
+            </div>
+            <div id="chord-modal-body" class="modal-body">
+                <!-- Chord diagrams will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="circle.js"></script>
+</body>
+</html>

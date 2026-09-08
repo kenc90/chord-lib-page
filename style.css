@@ -1,0 +1,349 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    color: #e0e0e0;
+}
+
+header {
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(90deg, #e94560, #f5a623);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+}
+
+/* Main Navigation */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.nav-link {
+    padding: 0.6rem 1.4rem;
+    border: 2px solid #f5a623;
+    background: transparent;
+    color: #f5a623;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: rgba(245, 166, 35, 0.15);
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    background: #f5a623;
+    color: #1a1a2e;
+}
+
+/* Category Navigation */
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.category-btn {
+    padding: 0.6rem 1.4rem;
+    border: 2px solid #e94560;
+    background: transparent;
+    color: #e94560;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+    background: rgba(233, 69, 96, 0.15);
+    transform: translateY(-2px);
+}
+
+.category-btn.active {
+    background: #e94560;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+}
+
+/* Chords Grid */
+.chords-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+    padding: 1rem 2rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Chord Card */
+.chord-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.chord-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(233, 69, 96, 0.4);
+}
+
+/* Clickable chord cards (with voicings) */
+.chord-card.has-voicings {
+    cursor: pointer;
+}
+
+.chord-card.has-voicings:hover {
+    border-color: rgba(245, 166, 35, 0.6);
+    box-shadow: 0 8px 25px rgba(245, 166, 35, 0.2);
+}
+
+.voicings-hint {
+    font-size: 0.75rem;
+    color: #f5a623;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.modal-header .note {
+    color: #e94560;
+}
+
+.modal-header .suffix {
+    color: #f5a623;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #e94560;
+}
+
+.modal-body {
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.voicing-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.voicing-label {
+    font-size: 0.85rem;
+    color: #f5a623;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+}
+
+.chord-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.8rem;
+}
+
+.chord-name .note {
+    color: #e94560;
+}
+
+.chord-name .suffix {
+    color: #f5a623;
+    font-size: 0.9rem;
+}
+
+/* SVG Chord Diagram */
+.chord-diagram {
+    width: 120px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.chord-diagram .fretboard {
+    stroke: #555;
+    stroke-width: 1;
+}
+
+.chord-diagram .string {
+    stroke: #888;
+    stroke-width: 1.5;
+}
+
+.chord-diagram .fret {
+    stroke: #666;
+    stroke-width: 1;
+}
+
+.chord-diagram .nut {
+    stroke: #ccc;
+    stroke-width: 3;
+}
+
+.chord-diagram .finger {
+    fill: #e94560;
+    stroke: none;
+}
+
+.chord-diagram .open-string {
+    fill: none;
+    stroke: #4caf50;
+    stroke-width: 2;
+}
+
+.chord-diagram .muted-string {
+    stroke: #ff5252;
+    stroke-width: 2;
+}
+
+.chord-diagram .barre {
+    fill: #e94560;
+    opacity: 0.9;
+}
+
+.chord-diagram .finger-text {
+    fill: #fff;
+    font-size: 8px;
+    font-weight: bold;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+.chord-diagram .fret-number {
+    fill: #888;
+    font-size: 9px;
+    text-anchor: start;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .chords-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .chords-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .categories {
+        gap: 0.4rem;
+    }
+
+    .category-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .chords-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

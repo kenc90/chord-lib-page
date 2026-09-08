@@ -1,0 +1,364 @@
+/* Main Navigation */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.nav-link {
+    padding: 0.6rem 1.4rem;
+    border: 2px solid #f5a623;
+    background: transparent;
+    color: #f5a623;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: rgba(245, 166, 35, 0.15);
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    background: #f5a623;
+    color: #1a1a2e;
+}
+
+/* Identifier Container */
+.identifier-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem 2rem;
+}
+
+/* Fretboard */
+.fretboard-wrapper {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+}
+
+.fretboard-wrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.string-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.string-label {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #f5a623;
+    font-size: 0.9rem;
+}
+
+.fretboard {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 600px;
+    position: relative;
+}
+
+.fret-row {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    position: relative;
+}
+
+.fret-cell {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.fret-cell:hover {
+    background: rgba(233, 69, 96, 0.2);
+}
+
+.fret-cell::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #888;
+    transform: translateY(-50%);
+}
+
+.fret-cell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 2px;
+    background: #666;
+}
+
+.fret-cell.open-string {
+    border-right: none;
+}
+
+.fret-cell.nut-cell {
+    border-left: 4px solid #ccc;
+}
+
+.fret-marker {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e94560;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #fff;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(233, 69, 96, 0.4);
+}
+
+.fret-marker.preview-marker {
+    background: #4caf50;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.5);
+    animation: pulse 0.8s ease-in-out infinite alternate;
+}
+
+.fret-marker.pinned-marker {
+    background: #4caf50;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.5);
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+/* Fret numbers */
+.fret-numbers {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.fret-number-label {
+    flex: 1;
+    text-align: center;
+}
+
+/* Inlay markers (fret dots) */
+.fret-row.inlay::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.control-btn {
+    padding: 0.8rem 2rem;
+    border: 2px solid #e94560;
+    background: transparent;
+    color: #e94560;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: rgba(233, 69, 96, 0.15);
+    transform: translateY(-2px);
+}
+
+.control-btn.primary {
+    background: #e94560;
+    color: #fff;
+}
+
+.control-btn.primary:hover {
+    background: #d63d56;
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+}
+
+#cancel-btn {
+    border-color: #4caf50;
+    color: #4caf50;
+}
+
+#cancel-btn:hover {
+    background: rgba(76, 175, 80, 0.15);
+}
+
+/* Result Panel */
+.result-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.selected-notes,
+.chord-result {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.selected-notes h3,
+.chord-result h3 {
+    color: #f5a623;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.notes-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 40px;
+}
+
+.note-chip {
+    background: rgba(233, 69, 96, 0.2);
+    border: 1px solid #e94560;
+    color: #fff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.chord-name-result {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #e94560;
+    margin-bottom: 0.5rem;
+}
+
+.chord-details {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.possible-chords {
+    margin-top: 1rem;
+}
+
+.possible-chord-item {
+    background: rgba(245, 166, 35, 0.1);
+    border: 1px solid rgba(245, 166, 35, 0.3);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.possible-chord-item:hover {
+    background: rgba(245, 166, 35, 0.2);
+    border-color: #f5a623;
+}
+
+.possible-chord-item.active-suggestion {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: #4caf50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.possible-chord-item .chord-label {
+    font-weight: bold;
+    color: #f5a623;
+}
+
+.possible-chord-item.active-suggestion .chord-label {
+    color: #4caf50;
+}
+
+.possible-chord-item .chord-notes {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.3rem;
+}
+
+/* Instructions */
+.instructions {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.instructions h3 {
+    color: #f5a623;
+    margin-bottom: 0.8rem;
+}
+
+.instructions ul {
+    padding-left: 1.5rem;
+    color: #a0a0a0;
+    line-height: 1.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .result-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .fretboard-wrapper {
+        padding: 1rem;
+    }
+
+    .fret-row {
+        height: 35px;
+    }
+
+    .fret-marker {
+        width: 24px;
+        height: 24px;
+        font-size: 0.6rem;
+    }
+}

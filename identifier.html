@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chord Identifier - Guitar Chords Library</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="identifier.css">
+</head>
+<body>
+    <header>
+        <h1>🎸 Chord Identifier</h1>
+        <p class="subtitle">Click on the fretboard to select notes and find the chord</p>
+    </header>
+
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link">Chord Library</a>
+        <a href="identifier.html" class="nav-link active">Chord Identifier</a>
+        <a href="circle.html" class="nav-link">Circle of Fifths</a>
+    </nav>
+
+    <main class="identifier-container">
+        <div class="fretboard-wrapper">
+            <div class="string-labels">
+                <span class="string-label">e</span>
+                <span class="string-label">B</span>
+                <span class="string-label">G</span>
+                <span class="string-label">D</span>
+                <span class="string-label">A</span>
+                <span class="string-label">E</span>
+            </div>
+            <div class="fretboard" id="fretboard">
+                <!-- Fretboard will be rendered by JavaScript -->
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="clear-btn" class="control-btn">Clear All</button>
+            <button id="cancel-btn" class="control-btn" style="display: none;">Cancel Preview</button>
+        </div>
+
+        <div class="result-panel" id="result-panel">
+            <div class="selected-notes" id="selected-notes">
+                <h3>Selected Notes</h3>
+                <div class="notes-display" id="notes-display">No notes selected</div>
+            </div>
+            <div class="chord-result" id="chord-result">
+                <h3>Identified Chord</h3>
+                <div class="chord-name-result" id="chord-name-result">-</div>
+                <div class="chord-details" id="chord-details"></div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to use:</h3>
+            <ul>
+                <li>Click on any fret position to add/remove a note</li>
+                <li>Select at least 2 notes to identify a chord</li>
+                <li>The chord is identified automatically as you select notes</li>
+                <li>Click "Clear All" to start over</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>Guitar Chords Library &copy; 2026</p>
+    </footer>
+
+    <script src="identifier.js"></script>
+</body>
+</html>
