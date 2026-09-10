@@ -94,6 +94,18 @@ header h1 {
     box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
 }
 
+.category-btn.utility-category {
+    border-color: #4cafc0;
+    color: #4cafc0;
+}
+
+.category-btn.utility-category:hover,
+.category-btn.utility-category.active {
+    background: #4cafc0;
+    color: #102a3a;
+    box-shadow: 0 4px 15px rgba(76, 175, 192, 0.35);
+}
+
 /* Chords Grid */
 .chords-grid {
     display: grid;
@@ -122,6 +134,7 @@ header h1 {
 
 /* Chord Card */
 .chord-card {
+    position: relative;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
@@ -146,6 +159,53 @@ header h1 {
 .chord-card.has-voicings:hover {
     border-color: rgba(245, 166, 35, 0.6);
     box-shadow: 0 8px 25px rgba(245, 166, 35, 0.2);
+}
+
+.pin-chord-btn {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 1.65rem;
+    height: 1.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    background: rgba(26, 26, 46, 0.72);
+    color: #a0a0a0;
+    cursor: pointer;
+    opacity: 0.65;
+    transition: all 0.2s ease;
+}
+
+.pin-icon {
+    display: block;
+    width: 0.9rem;
+    height: 0.9rem;
+    margin: auto;
+    transform: rotate(35deg);
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
+.pin-chord-btn:hover,
+.pin-chord-btn:focus-visible,
+.pin-chord-btn.pinned {
+    border-color: #f5a623;
+    color: #f5a623;
+    opacity: 1;
+}
+
+.pin-chord-btn.pinned {
+    background: rgba(245, 166, 35, 0.16);
+}
+
+.empty-pinned-chords {
+    grid-column: 1 / -1;
+    padding: 3rem 1rem;
+    color: #a0a0a0;
+    text-align: center;
 }
 
 .voicings-hint {

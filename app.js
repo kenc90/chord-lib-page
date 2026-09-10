@@ -1,6 +1,19 @@
 // Guitar Chords Library - Complete chord data and SVG rendering
 
 const NOTES = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+const PINNED_CHORDS_STORAGE_KEY = 'guitar-chords-library-pinned-chords';
+
+function getPinnedChordNames() {
+    try {
+        return new Set(JSON.parse(localStorage.getItem(PINNED_CHORDS_STORAGE_KEY)) || []);
+    } catch {
+        return new Set();
+    }
+}
+
+function savePinnedChordNames(pinnedChordNames) {
+    localStorage.setItem(PINNED_CHORDS_STORAGE_KEY, JSON.stringify([...pinnedChordNames]));
+}
 
 // Chord data: [string6, string5, string4, string3, string2, string1]
 // -1 = muted, 0 = open, 1+ = fret number
@@ -524,9 +537,13 @@ function renderChordCard(chord) {
     const hasVoicings = CHORD_VOICINGS[chord.name] && CHORD_VOICINGS[chord.name].length > 1;
     const clickAttr = hasVoicings ? `onclick="showChordVoicings('${chord.name}')"` : '';
     const hasMoreClass = hasVoicings ? ' has-voicings' : '';
+    const isPinned = getPinnedChordNames().has(chord.name);
 
     return `
         <div class="chord-card${hasMoreClass}" ${clickAttr}>
+            <button class="pin-chord-btn${isPinned ? ' pinned' : ''}" type="button" onclick="toggleChordPin(event, '${chord.name}')" aria-label="${isPinned ? 'Unpin' : 'Pin'} ${chord.name}" title="${isPinned ? 'Unpin' : 'Pin'} ${chord.name}">
+                <svg class="pin-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17v5M8 3h8l-1 7 3 3H6l3-3-1-7Z"/></svg>
+            </button>
             <div class="chord-name">
                 <span class="note">${note}</span><span class="suffix">${suffix}</span>
             </div>
@@ -534,6 +551,21 @@ function renderChordCard(chord) {
             ${hasVoicings ? '<div class="voicings-hint">Click for more shapes</div>' : ''}
         </div>
     `;
+}
+
+function toggleChordPin(event, chordName) {
+    event.stopPropagation();
+    const pinnedChordNames = getPinnedChordNames();
+
+    if (pinnedChordNames.has(chordName)) {
+        pinnedChordNames.delete(chordName);
+    } else {
+        pinnedChordNames.add(chordName);
+    }
+
+    savePinnedChordNames(pinnedChordNames);
+    const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+    renderCategory(activeCategory);
 }
 
 // Render all chords for a category
@@ -576,6 +608,15 @@ function renderCategory(category) {
             html += renderChordCard(item.chord);
         }
         container.innerHTML = html;
+    } else if (category === 'pinned') {
+        const pinnedChordNames = getPinnedChordNames();
+        const pinnedChords = Object.values(CHORDS)
+            .flat()
+            .filter(chord => pinnedChordNames.has(chord.name));
+
+        container.innerHTML = pinnedChords.length > 0
+            ? pinnedChords.map(renderChordCard).join('')
+            : '<p class="empty-pinned-chords">No pinned chords yet. Use the pin button on any chord diagram to add it here.</p>';
     } else {
         const chords = CHORDS[category] || [];
         container.innerHTML = chords.map(renderChordCard).join('');
