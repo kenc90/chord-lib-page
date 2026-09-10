@@ -548,7 +548,7 @@ function renderChordCard(chord) {
                 <span class="note">${note}</span><span class="suffix">${suffix}</span>
             </div>
             ${renderChordDiagram(chord)}
-            ${hasVoicings ? '<div class="voicings-hint">Click for more shapes</div>' : ''}
+            ${hasVoicings ? `<div class="voicings-hint">${t('clickMore')}</div>` : ''}
         </div>
     `;
 }
@@ -616,7 +616,7 @@ function renderCategory(category) {
 
         container.innerHTML = pinnedChords.length > 0
             ? pinnedChords.map(renderChordCard).join('')
-            : '<p class="empty-pinned-chords">No pinned chords yet. Use the pin button on any chord diagram to add it here.</p>';
+            : `<p class="empty-pinned-chords">${t('noPinned')}</p>`;
     } else {
         const chords = CHORDS[category] || [];
         container.innerHTML = chords.map(renderChordCard).join('');
@@ -636,7 +636,7 @@ function showChordVoicings(chordName) {
     const match = chordName.match(/^([A-G][#b]?)(.*)$/);
     const note = match ? match[1] : chordName;
     const suffix = match ? match[2] : '';
-    modalTitle.innerHTML = `<span class="note">${note}</span><span class="suffix">${suffix}</span> - All Shapes`;
+    modalTitle.innerHTML = `<span class="note">${note}</span><span class="suffix">${suffix}</span> - ${t('allShapes')}`;
 
     // Render all voicings
     modalContent.innerHTML = voicings.map(voicing => `
@@ -663,6 +663,10 @@ document.querySelectorAll('.category-btn').forEach(btn => {
         btn.classList.add('active');
         renderCategory(btn.dataset.category);
     });
+});
+
+document.addEventListener('languagechange', () => {
+    renderCategory(document.querySelector('.category-btn.active').dataset.category);
 });
 
 // Close modal when clicking outside or pressing Escape

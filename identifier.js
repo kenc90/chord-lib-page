@@ -165,7 +165,7 @@ function updateSelectedNotesDisplay() {
     const display = document.getElementById('notes-display');
 
     if (selectedNotes.size === 0) {
-        display.textContent = 'No notes selected';
+        display.textContent = t('noNotesSelected');
         return;
     }
 
@@ -206,7 +206,7 @@ function identifyChord() {
 
     if (selectedNotes.size < 2) {
         resultDiv.textContent = '-';
-        detailsDiv.textContent = 'Select at least 2 notes to identify a chord';
+        detailsDiv.textContent = t('selectTwo');
         return;
     }
 
@@ -223,7 +223,7 @@ function identifyChord() {
 
     if (uniqueNotes.length < 2) {
         resultDiv.textContent = '-';
-        detailsDiv.textContent = 'Select different notes (currently only one pitch class)';
+        detailsDiv.textContent = t('selectDifferent');
         return;
     }
 
@@ -265,16 +265,16 @@ function identifyChord() {
 
     // Display results
     if (matches.length === 0) {
-        resultDiv.textContent = 'Unknown';
+        resultDiv.textContent = t('unknown');
 
         // Find partial matches (closest chords)
         const partialMatches = findPartialMatches(uniqueNotes);
 
-        let detailsHtml = `<p>Notes: ${uniqueNotes.join(', ')}</p>`;
-        detailsHtml += '<p>This combination doesn\'t exactly match a standard chord.</p>';
+        let detailsHtml = `<p>${t('notes')}: ${uniqueNotes.join(', ')}</p>`;
+        detailsHtml += `<p>${t('noMatch')}</p>`;
 
         if (partialMatches.length > 0) {
-            detailsHtml += '<div class="possible-chords"><p><strong>Suggested chords (hover to preview, click to pin):</strong></p>';
+            detailsHtml += `<div class="possible-chords"><p><strong>${t('suggestions')}</strong></p>`;
             partialMatches.slice(0, 6).forEach(match => {
                 detailsHtml += `
                     <div class="possible-chord-item"
@@ -282,7 +282,7 @@ function identifyChord() {
                          onmouseleave="restoreFretboard()"
                          onclick="pinChord('${match.root}', '${match.type}')">
                         <div class="chord-label">${match.fullName} (${match.type})</div>
-                        <div class="chord-notes">${match.matchedNotes}/${match.totalNotes} notes match · ${match.missingNotes} missing</div>
+                        <div class="chord-notes">${match.matchedNotes}/${match.totalNotes} ${t('notesMatch')} · ${match.missingNotes} ${t('missing')}</div>
                     </div>
                 `;
             });
@@ -297,10 +297,10 @@ function identifyChord() {
         const bestMatch = matches[0];
         resultDiv.textContent = bestMatch.fullName;
 
-        let detailsHtml = `<p>Notes: ${uniqueNotes.join(', ')}</p>`;
+        let detailsHtml = `<p>${t('notes')}: ${uniqueNotes.join(', ')}</p>`;
 
         if (matches.length > 1) {
-            detailsHtml += '<div class="possible-chords"><p><strong>Other possibilities (hover to preview, click to pin):</strong></p>';
+            detailsHtml += `<div class="possible-chords"><p><strong>${t('otherPossibilities')}</strong></p>`;
             matches.slice(1, 6).forEach(match => {
                 detailsHtml += `
                     <div class="possible-chord-item"
@@ -640,6 +640,11 @@ document.getElementById('shift-left-btn').addEventListener('click', () => shiftC
 document.getElementById('shift-right-btn').addEventListener('click', () => shiftChord(1));
 document.getElementById('clear-btn').addEventListener('click', clearAll);
 document.getElementById('cancel-btn').addEventListener('click', cancelPreview);
+
+document.addEventListener('languagechange', () => {
+    updateSelectedNotesDisplay();
+    identifyChord();
+});
 
 // Initialize
 renderFretboard();

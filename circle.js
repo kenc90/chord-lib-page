@@ -206,6 +206,63 @@ let currentKey = 0;
 let currentMode = 0;
 let isDraggingCircle = false;
 
+const LOCALIZED_DESCRIPTIONS = {
+    'zh-Hant': {
+        keys: [
+            '純粹、簡單、天真而清晰。沒有升降記號的白鍵調，傳達開闊與中性。',
+            '強烈、熱情而戲劇化。充滿張力與能量，常用於高潮段落。',
+            '明亮、勝利而凱旋。適合慶典、號角與歡樂能量。',
+            '溫暖、高貴、英雄而莊嚴。豐富有力，適合宏偉的作品。',
+            '活潑、明亮且充滿能量。吉他上的開放弦讓它格外共鳴。',
+            '平靜、田園而沉思。溫柔溫暖，讓人聯想到自然與寧靜。',
+            '神秘、複雜而豐富。介於明亮與陰暗之間，細膩而成熟。',
+            '友善、溫暖而樸實。經典吉他調性，開放且共鳴十足。',
+            '莊重、夢幻而飄逸。帶有天鵝絨般溫暖，適合浪漫深情的作品。',
+            '大膽、自信而有精神。明亮且具推進力，常見於搖滾與流行音樂。',
+            '溫暖、端莊而富表現力。常見於爵士、銅管樂與靈魂情歌。',
+            '明亮、銳利而穿透。帶有強烈清晰感，鮮明而不安定。'
+        ],
+        modes: [
+            '明亮、愉悅、凱旋且圓滿。西方音樂的基礎，穩定、振奮而完整。',
+            '苦甜、深情且爵士。小調的升六度帶來明亮轉折，酷而有律動感。',
+            '陰暗、異國、緊張且帶西班牙色彩。降二度營造鮮明的張力。',
+            '夢幻、漂浮、空靈而充滿驚奇。升四度帶來魔幻與超凡感。',
+            '藍調、搖滾、輕鬆而富冒險感。降七度賦予經典搖滾的個性。',
+            '悲傷、憂鬱、戲劇化且內省。自然小調，充滿情感深度。',
+            '不安、失諧、陰暗而不穩定。主音減和弦帶來強烈張力。'
+        ]
+    },
+    'zh-Hans': {
+        keys: [
+            '纯粹、简单、天真而清晰。没有升降记号的白键调，传达开阔与中性。',
+            '强烈、热情而戏剧化。充满张力与能量，常用于高潮段落。',
+            '明亮、胜利而凯旋。适合庆典、号角与欢乐能量。',
+            '温暖、高贵、英雄而庄严。丰富有力，适合宏伟的作品。',
+            '活泼、明亮且充满能量。吉他上的开放弦让它格外共鸣。',
+            '平静、田园而沉思。温柔温暖，让人联想到自然与宁静。',
+            '神秘、复杂而丰富。介于明亮与阴暗之间，细腻而成熟。',
+            '友善、温暖而朴实。经典吉他调性，开放且共鸣十足。',
+            '庄重、梦幻而飘逸。带有天鹅绒般温暖，适合浪漫深情的作品。',
+            '大胆、自信而有精神。明亮且具推进力，常见于摇滚与流行音乐。',
+            '温暖、端庄而富表现力。常见于爵士、铜管乐与灵魂情歌。',
+            '明亮、锐利而穿透。带有强烈清晰感，鲜明而不安定。'
+        ],
+        modes: [
+            '明亮、愉悦、凯旋且圆满。西方音乐的基础，稳定、振奋而完整。',
+            '苦甜、深情且爵士。小调的升六度带来明亮转折，酷而有律动感。',
+            '阴暗、异国、紧张且带西班牙色彩。降二度营造鲜明的张力。',
+            '梦幻、漂浮、空灵而充满惊奇。升四度带来魔幻与超凡感。',
+            '蓝调、摇滚、轻松而富冒险感。降七度赋予经典摇滚的个性。',
+            '悲伤、忧郁、戏剧化且内省。自然小调，充满情感深度。',
+            '不安、失谐、阴暗而不稳定。主音减和弦带来强烈张力。'
+        ]
+    }
+};
+
+function getDescription(kind, index, fallback) {
+    return LOCALIZED_DESCRIPTIONS[getLanguage()]?.[kind]?.[index] || fallback;
+}
+
 // Get scale notes for a key and mode
 function getScaleNotes(key, mode) {
     return MODES[mode].intervals.map(interval => (key + interval) % 12);
@@ -357,7 +414,7 @@ function renderScaleNotes() {
     keyMoodEl.innerHTML = `
         <div class="mood-item">
             <span class="mood-character">${keyInfo.character}</span>
-            <span class="mood-text"><strong>${NOTES[currentKey]} Key:</strong> ${keyInfo.mood}</span>
+            <span class="mood-text"><strong>${NOTES[currentKey]} Key:</strong> ${getDescription('keys', currentKey, keyInfo.mood)}</span>
         </div>
     `;
 
@@ -365,7 +422,7 @@ function renderScaleNotes() {
     modeMoodEl.innerHTML = `
         <div class="mood-item">
             <span class="mood-character">🎵</span>
-            <span class="mood-text"><strong>${modeInfo.name}:</strong> ${modeInfo.mood}</span>
+            <span class="mood-text"><strong>${modeInfo.name}:</strong> ${getDescription('modes', currentMode, modeInfo.mood)}</span>
         </div>
     `;
 
@@ -425,7 +482,7 @@ function renderDiatonicChords() {
                 <div class="chord-name">${chordName}</div>
                 <div class="chord-degree">${romans[i]}</div>
                 <div class="chord-type">${type === 'maj' ? 'Major' : type === 'min' ? 'Minor' : 'Diminished'}</div>
-                ${chord ? `<div class="diatonic-chord-diagram">${renderChordShape(chord, chordName)}</div>` : '<div class="chord-shape-unavailable">Shape unavailable</div>'}
+                ${chord ? `<div class="diatonic-chord-diagram">${renderChordShape(chord, chordName)}</div>` : `<div class="chord-shape-unavailable">${t('shapeUnavailable')}</div>`}
             </div>
         `;
     }).join('');
@@ -483,14 +540,14 @@ function renderRelationships() {
 
     let html = '';
     if (!isMinorMode) {
-        html += `<div class="relationship-item"><span class="rel-label">Relative Minor:</span><span class="rel-value">${NOTES[relativeMinorIndex]}m</span></div>`;
+        html += `<div class="relationship-item"><span class="rel-label">${t('relativeMinor')}</span><span class="rel-value">${NOTES[relativeMinorIndex]}m</span></div>`;
     } else {
-        html += `<div class="relationship-item"><span class="rel-label">Relative Major:</span><span class="rel-value">${NOTES[relativeMajorIndex]}</span></div>`;
+        html += `<div class="relationship-item"><span class="rel-label">${t('relativeMajor')}</span><span class="rel-value">${NOTES[relativeMajorIndex]}</span></div>`;
     }
-    html += `<div class="relationship-item"><span class="rel-label">Dominant (V):</span><span class="rel-value">${NOTES[dominantIndex]}</span></div>`;
-    html += `<div class="relationship-item"><span class="rel-label">Subdominant (IV):</span><span class="rel-value">${NOTES[subdominantIndex]}</span></div>`;
-    html += `<div class="relationship-item"><span class="rel-label">Parallel:</span><span class="rel-value">${NOTES[parallelKey]}${isMinorMode ? '' : 'm'}</span></div>`;
-    html += `<div class="relationship-item"><span class="rel-label">Key Signature:</span><span class="rel-value">${getKeySignature(currentKey, currentMode)}</span></div>`;
+    html += `<div class="relationship-item"><span class="rel-label">${t('dominant')}</span><span class="rel-value">${NOTES[dominantIndex]}</span></div>`;
+    html += `<div class="relationship-item"><span class="rel-label">${t('subdominant')}</span><span class="rel-value">${NOTES[subdominantIndex]}</span></div>`;
+    html += `<div class="relationship-item"><span class="rel-label">${t('parallel')}</span><span class="rel-value">${NOTES[parallelKey]}${isMinorMode ? '' : 'm'}</span></div>`;
+    html += `<div class="relationship-item"><span class="rel-label">${t('keySignature')}</span><span class="rel-value">${getKeySignature(currentKey, currentMode)}</span></div>`;
 
     relEl.innerHTML = html;
 }
@@ -559,6 +616,8 @@ document.addEventListener('keydown', (e) => {
         closeChordModal();
     }
 });
+
+document.addEventListener('languagechange', updateAll);
 
 // Initial render
 updateAll();
