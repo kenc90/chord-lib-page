@@ -378,16 +378,18 @@ function renderDiatonicChords() {
         const type = chordTypes[i];
         const suffix = suffixMap[type];
         const chordName = NOTES[note] + suffix;
+        const chord = CHORD_SHAPES[chordName];
         let roleClass = '';
         if (i === 0) roleClass = ' tonic';
         if (i === 3) roleClass = ' subdominant';
         if (i === 4) roleClass = ' dominant';
 
         return `
-            <div class="diatonic-chord${roleClass}" onclick="showChordModal('${chordName}')">
+            <div class="diatonic-chord${roleClass}">
                 <div class="chord-name">${chordName}</div>
                 <div class="chord-degree">${romans[i]}</div>
                 <div class="chord-type">${type === 'maj' ? 'Major' : type === 'min' ? 'Minor' : 'Diminished'}</div>
+                ${chord ? `<div class="diatonic-chord-diagram">${renderChordShape(chord, chordName)}</div>` : '<div class="chord-shape-unavailable">Shape unavailable</div>'}
             </div>
         `;
     }).join('');

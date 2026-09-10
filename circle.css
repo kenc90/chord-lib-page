@@ -192,6 +192,10 @@
 .info-panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "scale relationships"
+        "diatonic diatonic"
+        "description description";
     gap: 1.5rem;
 }
 
@@ -203,11 +207,19 @@
 }
 
 .info-section:first-child {
-    grid-column: 1 / -1;
+    grid-area: scale;
+}
+
+.info-section:nth-child(2) {
+    grid-area: diatonic;
+}
+
+.info-section:nth-child(3) {
+    grid-area: relationships;
 }
 
 .description-section {
-    grid-column: 1 / -1;
+    grid-area: description;
 }
 
 .info-section h3 {
@@ -289,8 +301,8 @@
 
 /* Diatonic Chords */
 .diatonic-chords {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.8rem;
 }
 
@@ -298,15 +310,9 @@
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 0.8rem 1rem;
+    padding: 0.8rem;
     text-align: center;
-    min-width: 70px;
-    transition: all 0.2s ease;
-}
-
-.diatonic-chord:hover {
-    border-color: rgba(245, 166, 35, 0.4);
-    background: rgba(245, 166, 35, 0.1);
+    min-width: 0;
 }
 
 .diatonic-chord .chord-name {
@@ -340,6 +346,23 @@
     border-color: rgba(76, 175, 80, 0.4);
 }
 
+.diatonic-chord-diagram {
+    margin: 0.7rem auto 0;
+    max-width: 105px;
+}
+
+.diatonic-chord-diagram .chord-diagram {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.chord-shape-unavailable {
+    color: #888;
+    font-size: 0.7rem;
+    margin-top: 0.7rem;
+}
+
 /* Relationships */
 .relationships {
     color: #a0a0a0;
@@ -366,6 +389,11 @@
 @media (max-width: 768px) {
     .info-panel {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "scale"
+            "relationships"
+            "diatonic"
+            "description";
     }
 
     .controls-panel {
@@ -404,18 +432,6 @@
     #circle-svg {
         max-width: 300px;
     }
-}
-
-/* Clickable diatonic chords */
-.diatonic-chord {
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.diatonic-chord:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(233, 69, 96, 0.3);
-    border-color: rgba(233, 69, 96, 0.5);
 }
 
 /* Song example links */
