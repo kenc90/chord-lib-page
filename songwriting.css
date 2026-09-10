@@ -1,0 +1,391 @@
+body {
+    padding-bottom: 2rem;
+}
+
+.songwriting-container {
+    width: min(1100px, calc(100% - 2rem));
+    margin: 1rem auto 0;
+}
+
+.chord-reference-panel,
+.song-editor-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+}
+
+.chord-reference-panel {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.panel-heading,
+.song-toolbar,
+.song-actions,
+.chord-entry-bar {
+    display: flex;
+    align-items: center;
+}
+
+.panel-heading {
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.panel-heading h2 {
+    color: #f5a623;
+    font-size: 1rem;
+}
+
+.reference-count {
+    min-width: 1.5rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    background: rgba(76, 175, 192, 0.18);
+    color: #72d2e2;
+    font-size: 0.78rem;
+    text-align: center;
+}
+
+.chord-reference {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+}
+
+.empty-reference {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+}
+
+.reference-chord {
+    position: relative;
+    width: 146px;
+    flex: 0 0 146px;
+    padding: 0.7rem;
+    border: 1px solid rgba(245, 166, 35, 0.3);
+    border-radius: 6px;
+    background: rgba(15, 52, 96, 0.35);
+    text-align: center;
+}
+
+.reference-chord-name {
+    margin-bottom: 0.35rem;
+    color: #f5a623;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.shape-diagram-btn {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.shape-diagram-btn:hover .reference-diagram,
+.shape-diagram-btn:focus-visible .reference-diagram {
+    filter: drop-shadow(0 0 5px rgba(245, 166, 35, 0.75));
+}
+
+.reference-diagram {
+    display: block;
+    width: 120px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.reference-diagram .string,
+.reference-diagram .fret {
+    stroke: #7c8797;
+    stroke-width: 1;
+}
+
+.reference-diagram .nut {
+    stroke: #e0e0e0;
+    stroke-width: 3;
+}
+
+.reference-diagram .finger {
+    fill: #e94560;
+}
+
+.reference-diagram .barre {
+    fill: #e94560;
+}
+
+.reference-diagram .base-fret {
+    fill: #f5a623;
+    font: 700 10px ui-monospace, Consolas, monospace;
+}
+
+.song-editor-panel {
+    overflow: hidden;
+}
+
+.song-toolbar {
+    justify-content: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.song-title-input {
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.song-title-input::placeholder {
+    color: #a0a0a0;
+}
+
+.song-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.song-metadata {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 0.35rem;
+    color: #a0a0a0;
+    font-size: 0.8rem;
+}
+
+.song-metadata select,
+.song-metadata input {
+    height: 1.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+    background: #16213e;
+    color: #f3f4f6;
+    padding: 0 0.35rem;
+    font: inherit;
+}
+
+.song-metadata input {
+    width: 3.6rem;
+}
+
+.song-action-btn {
+    border: 1px solid rgba(245, 166, 35, 0.65);
+    border-radius: 5px;
+    background: transparent;
+    color: #f5a623;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.song-action-btn {
+    padding: 0.5rem 0.65rem;
+}
+
+.song-action-btn:hover {
+    background: rgba(245, 166, 35, 0.14);
+}
+
+.import-btn {
+    display: inline-flex;
+    align-items: center;
+}
+
+.lyrics-sheet {
+    position: relative;
+    padding: 1.25rem;
+    min-height: 350px;
+    outline: 0;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 2.2;
+    color: #f3f4f6;
+    white-space: pre-wrap;
+}
+
+.lyrics-sheet > div,
+.lyrics-sheet > p {
+    position: relative;
+    min-height: 3.4rem;
+    padding-top: 1.35rem;
+}
+
+.lyrics-sheet:empty::before {
+    content: attr(data-placeholder);
+    color: #768195;
+    pointer-events: none;
+}
+
+.chord-annotation {
+    position: relative;
+    display: inline;
+    padding-top: 1.3rem;
+}
+
+.chord-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #f5a623;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.chord-label:hover {
+    color: #fff;
+}
+
+.chord-snap-indicator {
+    position: absolute;
+    display: none;
+    width: 1px;
+    height: 1.2rem;
+    border-left: 2px dashed #72d2e2;
+    box-shadow: 0 0 7px rgba(114, 210, 226, 0.75);
+    pointer-events: none;
+    transform: translateX(-50%);
+}
+
+.chord-snap-indicator.visible {
+    display: block;
+}
+
+.chord-finder-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.72);
+    z-index: 1000;
+}
+
+.chord-finder-modal.active {
+    display: flex;
+}
+
+.chord-finder-dialog {
+    width: min(520px, 100%);
+    max-height: min(580px, 90vh);
+    overflow: hidden;
+    padding: 1.25rem;
+    border: 1px solid rgba(245, 166, 35, 0.45);
+    border-radius: 8px;
+    background: #16213e;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.chord-finder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.chord-finder-header h2 {
+    color: #f5a623;
+    font-size: 1.1rem;
+}
+
+.close-finder-btn {
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    background: transparent;
+    color: #a0a0a0;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.chord-finder-search {
+    width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    outline: 0;
+    background: #1a1a2e;
+    color: #fff;
+    padding: 0.65rem;
+    font: inherit;
+}
+
+.chord-finder-results {
+    display: grid;
+    gap: 0.7rem;
+}
+
+.chord-choice-section h3 {
+    margin-bottom: 0.45rem;
+    color: #72d2e2;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.chord-choice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+    gap: 0.35rem;
+}
+
+.chord-choice {
+    min-height: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #f3f4f6;
+    cursor: pointer;
+    font: 700 0.85rem ui-monospace, Consolas, monospace;
+}
+
+.chord-choice:hover {
+    border-color: #f5a623;
+    background: rgba(245, 166, 35, 0.13);
+    color: #f5a623;
+}
+
+@media (max-width: 640px) {
+    .songwriting-container {
+        width: min(100% - 1rem, 1100px);
+    }
+
+    .song-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .song-actions {
+        justify-content: flex-start;
+    }
+
+    .song-metadata {
+        margin-left: 0;
+    }
+
+    .lyrics-sheet {
+        padding: 0.75rem;
+    }
+
+    .no-chords-found {
+        color: #a0a0a0;
+        font-size: 0.9rem;
+}

@@ -657,6 +657,7 @@ function closeVoicingsModal() {
 }
 
 // Event listeners
+if (document.getElementById('chords-container')) {
 document.querySelectorAll('.category-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
@@ -695,3 +696,4 @@ window.addEventListener('scroll', () => {
 
 // Initial render
 renderCategory('major');
+}
