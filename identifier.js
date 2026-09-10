@@ -599,7 +599,45 @@ function clearAll() {
     });
 }
 
+function shiftChord(direction) {
+    if (selectedNotes.size === 0) return;
+
+    const positions = [...selectedNotes].map(key => key.split('-').map(Number));
+    const canShift = positions.every(([, fret]) => {
+        const nextFret = fret + direction;
+        return nextFret >= 0 && nextFret <= NUM_FRETS;
+    });
+    if (!canShift) return;
+
+    pinnedChord = null;
+    isPreviewing = false;
+    savedNotes = null;
+    currentPreviewChord = null;
+    document.getElementById('cancel-btn').style.display = 'none';
+    document.querySelectorAll('.possible-chord-item').forEach(item => {
+        item.classList.remove('active-suggestion');
+    });
+
+    selectedNotes = new Set(positions.map(([stringIndex, fret]) => `${stringIndex}-${fret + direction}`));
+    document.querySelectorAll('.fret-marker').forEach(marker => marker.remove());
+    selectedNotes.forEach(key => {
+        const [stringIndex, fret] = key.split('-').map(Number);
+        const cell = document.querySelector(`.fret-cell[data-string="${stringIndex}"][data-fret="${fret}"]`);
+        if (cell) {
+            const marker = document.createElement('div');
+            marker.className = 'fret-marker';
+            marker.textContent = notePositions[key];
+            cell.appendChild(marker);
+        }
+    });
+
+    updateSelectedNotesDisplay();
+    identifyChord();
+}
+
 // Event listeners
+document.getElementById('shift-left-btn').addEventListener('click', () => shiftChord(-1));
+document.getElementById('shift-right-btn').addEventListener('click', () => shiftChord(1));
 document.getElementById('clear-btn').addEventListener('click', clearAll);
 document.getElementById('cancel-btn').addEventListener('click', cancelPreview);
 

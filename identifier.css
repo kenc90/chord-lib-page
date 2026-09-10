@@ -206,6 +206,19 @@
     transition: all 0.3s ease;
 }
 
+.shift-btn {
+    width: 3rem;
+    padding: 0;
+}
+
+.shift-btn svg {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    margin: auto;
+    fill: currentColor;
+}
+
 .control-btn:hover {
     background: rgba(233, 69, 96, 0.15);
     transform: translateY(-2px);
