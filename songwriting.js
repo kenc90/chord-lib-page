@@ -99,7 +99,7 @@ function openChordFinder(event) {
 
     const line = event.target.closest('div, p') || sheet.lastElementChild || sheet;
     const lineBounds = line.getBoundingClientRect();
-    if (event.clientY > lineBounds.top + 24) return;
+    if (!line.textContent.trim() || event.clientY > lineBounds.top + 24) return;
 
     const caretRange = document.caretRangeFromPoint(event.clientX, lineBounds.top + 28);
     if (!caretRange || !sheet.contains(caretRange.commonAncestorContainer)) return;
