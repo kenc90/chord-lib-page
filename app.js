@@ -161,6 +161,7 @@ const CHORD_VOICINGS = {
     'C#': [
         { name: 'C#', frets: [-1, 4, 3, 1, 2, 1], fingers: [0, 4, 3, 1, 2, 1], barre: { fret: 1, from: 3, to: 1 }, label: 'Open A-shape (4th fret)' },
         { name: 'C#', frets: [9, 11, 11, 10, 9, 9], fingers: [1, 3, 4, 2, 1, 1], baseFret: 8, barre: { fret: 9, from: 6, to: 1 }, label: 'E-shape Barre (9th fret)' },
+        { name: 'C#', frets: [-1, 4, 6, 6, 6, 4], fingers: [0, 1, 2, 3, 4, 1], baseFret: 1, barre: { fret: 4, from: 5, to: 1 }, label: 'A-shape Barre (4th fret)' },
     ],
     'D': [
         { name: 'D', frets: [-1, -1, 0, 2, 3, 2], fingers: [0, 0, 0, 1, 3, 2], label: 'Open Position' },
@@ -282,16 +283,27 @@ const CHORD_VOICINGS = {
         { name: 'C7', frets: [8, 10, 8, 9, 8, 8], fingers: [1, 3, 1, 2, 1, 1], baseFret: 7, barre: { fret: 8, from: 6, to: 1 }, label: 'E7-shape Barre (8th fret)' },
         { name: 'C7', frets: [-1, 3, 5, 3, 5, 3], fingers: [0, 1, 3, 1, 4, 2], baseFret: 1, label: 'A7-shape (3rd fret)' },
     ],
+    'C#7': [
+        { name: 'C#7', frets: [-1, 4, 3, 4, 2, 1], fingers: [0, 3, 2, 4, 1, 0], barre: { fret: 1, from: 3, to: 1 }, label: 'Open Position' },
+        { name: 'C#7', frets: [9, 11, 9, 10, 9, 9], fingers: [1, 3, 1, 2, 1, 1], baseFret: 8, barre: { fret: 9, from: 6, to: 1 }, label: 'E7-shape Barre (9th fret)' },
+        { name: 'C#7', frets: [-1, 4, 6, 4, 6, 4], fingers: [0, 1, 3, 1, 4, 2], baseFret: 1, label: 'A7-shape (4th fret)' },
+    ],
     'D7': [
         { name: 'D7', frets: [-1, -1, 0, 2, 1, 2], fingers: [0, 0, 0, 2, 1, 3], label: 'Open Position' },
         { name: 'D7', frets: [-1, 8, 10, 8, 10, 8], fingers: [0, 1, 2, 1, 3, 1], baseFret: 1, barre: { fret: 8, from: 5, to: 1 }, label: 'A7-shape Barre (8th fret)' },
         { name: 'D7', frets: [10, 12, 10, 11, 10, 10], fingers: [1, 3, 1, 2, 1, 1], baseFret: 9, barre: { fret: 10, from: 6, to: 1 }, label: 'E7-shape Barre (10th fret)' },
+    ],
+    'Eb7': [
+        { name: 'Eb7', frets: [-1, -1, 1, 3, 2, 3], fingers: [0, 0, 1, 3, 2, 4], label: 'Open Position' },
+        { name: 'Eb7', frets: [-1, 6, 8, 6, 8, 6], fingers: [0, 1, 3, 1, 4, 2], baseFret: 1, barre: { fret: 6, from: 5, to: 1 }, label: 'A7-shape Barre (6th fret)' },
+        { name: 'Eb7', frets: [11, 13, 11, 12, 11, 11], fingers: [1, 3, 1, 2, 1, 1], baseFret: 10, barre: { fret: 11, from: 6, to: 1 }, label: 'E7-shape Barre (11th fret)' },
     ],
     'E7': [
         { name: 'E7', frets: [0, 2, 0, 1, 0, 0], fingers: [0, 2, 0, 1, 0, 0], label: 'Open Position' },
         { name: 'E7', frets: [0, 2, 2, 1, 3, 0], fingers: [0, 2, 3, 1, 4, 0], label: 'Open Position (alt)' },
         { name: 'E7', frets: [-1, 7, 9, 7, 8, 7], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 7, from: 5, to: 1 }, label: 'A7-shape Barre (7th fret)' },
         { name: 'E7', frets: [0, 2, 0, 4, 5, 4], fingers: [0, 1, 0, 2, 4, 3], label: 'Upper voicing (open bass)' },
+        { name: 'E7', frets: [12, 14, 12, 13, 12, 12], fingers: [1, 3, 1, 2, 1, 1], baseFret: 11, barre: { fret: 12, from: 6, to: 1 }, label: 'E7-shape Barre (12th fret)' },
     ],
     'F7': [
         { name: 'F7', frets: [1, 3, 1, 2, 1, 1], fingers: [1, 3, 1, 2, 1, 1], barre: { fret: 1, from: 6, to: 1 }, label: 'E7-shape Barre (1st fret)' },
@@ -331,71 +343,135 @@ const CHORD_VOICINGS = {
         { name: 'Cmaj7', frets: [-1, 3, 2, 0, 0, 0], fingers: [0, 3, 2, 0, 0, 0], label: 'Open Position' },
         { name: 'Cmaj7', frets: [-1, 3, 5, 4, 5, 3], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, label: 'A-shape (3rd fret)' },
         { name: 'Cmaj7', frets: [8, 10, 9, 9, 8, 8], fingers: [1, 4, 2, 3, 1, 1], baseFret: 7, barre: { fret: 8, from: 6, to: 1 }, label: 'E-shape Barre (8th fret)' },
+        { name: 'Cmaj7', frets: [-1, -1, 5, 4, 5, 3], fingers: [0, 0, 2, 1, 3, 1], baseFret: 1, label: 'D-shape (5th fret)' },
+    ],
+    'C#maj7': [
+        { name: 'C#maj7', frets: [-1, 4, 3, 5, 5, 4], fingers: [0, 1, 1, 3, 4, 2], barre: { fret: 3, from: 4, to: 2 }, label: 'Open Position' },
+        { name: 'C#maj7', frets: [-1, 4, 6, 5, 6, 4], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, label: 'A-shape (4th fret)' },
+        { name: 'C#maj7', frets: [9, 11, 10, 10, 9, 9], fingers: [1, 4, 2, 3, 1, 1], baseFret: 8, barre: { fret: 9, from: 6, to: 1 }, label: 'E-shape Barre (9th fret)' },
     ],
     'Dmaj7': [
         { name: 'Dmaj7', frets: [-1, -1, 0, 2, 2, 2], fingers: [0, 0, 0, 1, 2, 3], label: 'Open Position' },
         { name: 'Dmaj7', frets: [-1, 5, 7, 6, 7, 5], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, label: 'A-shape (5th fret)' },
         { name: 'Dmaj7', frets: [10, 12, 11, 11, 10, 10], fingers: [1, 4, 2, 3, 1, 1], baseFret: 9, barre: { fret: 10, from: 6, to: 1 }, label: 'E-shape Barre (10th fret)' },
+        { name: 'Dmaj7', frets: [-1, -1, 0, 6, 7, 6], fingers: [0, 0, 0, 1, 3, 2], baseFret: 1, label: 'Inversion (6th fret)' },
+    ],
+    'Ebmaj7': [
+        { name: 'Ebmaj7', frets: [-1, -1, 1, 3, 3, 3], fingers: [0, 0, 1, 2, 3, 4], label: 'Open Position' },
+        { name: 'Ebmaj7', frets: [-1, 6, 8, 7, 8, 6], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, label: 'A-shape (6th fret)' },
+        { name: 'Ebmaj7', frets: [11, 13, 12, 12, 11, 11], fingers: [1, 4, 2, 3, 1, 1], baseFret: 10, barre: { fret: 11, from: 6, to: 1 }, label: 'E-shape Barre (11th fret)' },
     ],
     'Emaj7': [
         { name: 'Emaj7', frets: [0, 2, 1, 1, 0, 0], fingers: [0, 3, 1, 2, 0, 0], label: 'Open Position' },
         { name: 'Emaj7', frets: [0, 2, 4, 4, 4, 4], fingers: [0, 1, 2, 3, 4, 4], baseFret: 1, label: 'A-shape (open bass)' },
+        { name: 'Emaj7', frets: [-1, 7, 9, 8, 9, 7], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, barre: { fret: 7, from: 5, to: 1 }, label: 'A-shape Barre (7th fret)' },
+        { name: 'Emaj7', frets: [12, 14, 13, 13, 12, 12], fingers: [1, 4, 2, 3, 1, 1], baseFret: 11, barre: { fret: 12, from: 6, to: 1 }, label: 'E-shape Barre (12th fret)' },
+        { name: 'Emaj7', frets: [0, 2, 1, 1, 0, 4], fingers: [0, 2, 1, 1, 0, 4], label: 'Open with high E' },
     ],
     'Fmaj7': [
         { name: 'Fmaj7', frets: [1, 3, 2, 2, 1, 1], fingers: [1, 4, 2, 3, 1, 1], barre: { fret: 1, from: 6, to: 1 }, label: 'E-shape Barre (1st fret)' },
         { name: 'Fmaj7', frets: [-1, -1, 3, 2, 1, 0], fingers: [0, 0, 3, 2, 1, 0], label: 'Small shape (1st fret)' },
+        { name: 'Fmaj7', frets: [-1, 8, 10, 9, 10, 8], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, barre: { fret: 8, from: 5, to: 1 }, label: 'A-shape Barre (8th fret)' },
+        { name: 'Fmaj7', frets: [-1, -1, 3, 5, 5, 5], fingers: [0, 0, 1, 2, 3, 4], baseFret: 1, label: 'D-shape (3rd fret)' },
+    ],
+    'F#maj7': [
+        { name: 'F#maj7', frets: [2, 4, 3, 3, 2, 2], fingers: [1, 4, 2, 3, 1, 1], baseFret: 1, barre: { fret: 2, from: 6, to: 1 }, label: 'E-shape Barre (2nd fret)' },
+        { name: 'F#maj7', frets: [-1, -1, 4, 3, 2, 1], fingers: [0, 0, 4, 3, 2, 1], label: 'Small shape (2nd fret)' },
+        { name: 'F#maj7', frets: [-1, 9, 11, 10, 11, 9], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, barre: { fret: 9, from: 5, to: 1 }, label: 'A-shape Barre (9th fret)' },
     ],
     'Gmaj7': [
         { name: 'Gmaj7', frets: [3, 2, 0, 0, 0, 2], fingers: [3, 2, 0, 0, 0, 1], label: 'Open Position' },
         { name: 'Gmaj7', frets: [3, 5, 4, 4, 3, 3], fingers: [1, 4, 2, 3, 1, 1], baseFret: 2, barre: { fret: 3, from: 6, to: 1 }, label: 'E-shape Barre (3rd fret)' },
+        { name: 'Gmaj7', frets: [-1, 10, 12, 11, 12, 10], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, barre: { fret: 10, from: 5, to: 1 }, label: 'A-shape Barre (10th fret)' },
+        { name: 'Gmaj7', frets: [3, 2, 0, 0, 0, 2], fingers: [2, 1, 0, 0, 0, 3], label: 'Open (alt fingers)' },
+    ],
+    'Abmaj7': [
+        { name: 'Abmaj7', frets: [4, 3, 5, 5, 4, 4], fingers: [2, 1, 3, 4, 1, 1], barre: { fret: 4, from: 5, to: 1 }, label: 'Open Position' },
+        { name: 'Abmaj7', frets: [4, 6, 5, 5, 4, 4], fingers: [1, 4, 2, 3, 1, 1], baseFret: 3, barre: { fret: 4, from: 6, to: 1 }, label: 'E-shape Barre (4th fret)' },
+        { name: 'Abmaj7', frets: [-1, 11, 13, 12, 13, 11], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, barre: { fret: 11, from: 5, to: 1 }, label: 'A-shape Barre (11th fret)' },
     ],
     'Amaj7': [
         { name: 'Amaj7', frets: [-1, 0, 2, 1, 2, 0], fingers: [0, 0, 3, 1, 4, 0], label: 'Open Position' },
         { name: 'Amaj7', frets: [5, 7, 6, 6, 5, 5], fingers: [1, 4, 2, 3, 1, 1], baseFret: 4, barre: { fret: 5, from: 6, to: 1 }, label: 'E-shape Barre (5th fret)' },
+        { name: 'Amaj7', frets: [-1, 12, 14, 13, 14, 12], fingers: [0, 1, 3, 2, 4, 1], baseFret: 1, barre: { fret: 12, from: 5, to: 1 }, label: 'A-shape Barre (12th fret)' },
+        { name: 'Amaj7', frets: [-1, 0, 2, 1, 2, 4], fingers: [0, 0, 2, 1, 3, 4], label: 'Open with high E' },
+    ],
+    'Bbmaj7': [
+        { name: 'Bbmaj7', frets: [-1, 1, 3, 2, 3, 1], fingers: [0, 1, 3, 2, 4, 1], barre: { fret: 1, from: 5, to: 1 }, label: 'A-shape Barre (1st fret)' },
+        { name: 'Bbmaj7', frets: [6, 8, 7, 7, 6, 6], fingers: [1, 4, 2, 3, 1, 1], baseFret: 5, barre: { fret: 6, from: 6, to: 1 }, label: 'E-shape Barre (6th fret)' },
+        { name: 'Bbmaj7', frets: [-1, -1, 3, 2, 3, 1], fingers: [0, 0, 3, 1, 4, 2], label: 'Small shape (3rd fret)' },
     ],
     'Bmaj7': [
         { name: 'Bmaj7', frets: [-1, 2, 4, 3, 4, 2], fingers: [0, 1, 3, 2, 4, 1], barre: { fret: 2, from: 5, to: 1 }, label: 'A-shape Barre (2nd fret)' },
         { name: 'Bmaj7', frets: [7, 9, 8, 8, 7, 7], fingers: [1, 4, 2, 3, 1, 1], baseFret: 6, barre: { fret: 7, from: 6, to: 1 }, label: 'E-shape Barre (7th fret)' },
+        { name: 'Bmaj7', frets: [-1, -1, 4, 3, 4, 2], fingers: [0, 0, 3, 1, 4, 2], label: 'Small shape (4th fret)' },
     ],
 
     // === MIN7 CHORDS ===
     'Cm7': [
         { name: 'Cm7', frets: [-1, 3, 5, 3, 4, 3], fingers: [0, 1, 3, 1, 2, 1], barre: { fret: 3, from: 6, to: 1 }, label: 'Em7-shape Barre (3rd fret)' },
         { name: 'Cm7', frets: [8, 10, 8, 8, 8, 8], fingers: [1, 3, 1, 1, 1, 1], baseFret: 7, barre: { fret: 8, from: 6, to: 1 }, label: 'Am7-shape Barre (8th fret)' },
+        { name: 'Cm7', frets: [-1, 3, 5, 3, 4, 6], fingers: [0, 1, 3, 1, 2, 4], baseFret: 1, label: 'With high note' },
+    ],
+    'C#m7': [
+        { name: 'C#m7', frets: [-1, 4, 6, 4, 5, 4], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 4, from: 6, to: 1 }, label: 'Em7-shape Barre (4th fret)' },
+        { name: 'C#m7', frets: [9, 11, 9, 9, 9, 9], fingers: [1, 3, 1, 1, 1, 1], baseFret: 8, barre: { fret: 9, from: 6, to: 1 }, label: 'Am7-shape Barre (9th fret)' },
     ],
     'Dm7': [
         { name: 'Dm7', frets: [-1, -1, 0, 2, 1, 1], fingers: [0, 0, 0, 3, 1, 2], label: 'Open Position' },
         { name: 'Dm7', frets: [-1, 8, 10, 8, 10, 8], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 8, from: 5, to: 1 }, label: 'Am7-shape Barre (8th fret)' },
         { name: 'Dm7', frets: [10, 12, 10, 10, 10, 10], fingers: [1, 3, 1, 1, 1, 1], baseFret: 9, barre: { fret: 10, from: 6, to: 1 }, label: 'Em7-shape Barre (10th fret)' },
+        { name: 'Dm7', frets: [-1, -1, 0, 5, 6, 5], fingers: [0, 0, 0, 1, 3, 2], baseFret: 1, label: 'Inversion (5th fret)' },
+    ],
+    'Ebm7': [
+        { name: 'Ebm7', frets: [-1, -1, 1, 3, 2, 2], fingers: [0, 0, 1, 4, 2, 3], label: 'Open Position' },
+        { name: 'Ebm7', frets: [-1, 6, 8, 6, 7, 6], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 6, from: 5, to: 1 }, label: 'Am7-shape Barre (6th fret)' },
+        { name: 'Ebm7', frets: [11, 13, 11, 11, 11, 11], fingers: [1, 3, 1, 1, 1, 1], baseFret: 10, barre: { fret: 11, from: 6, to: 1 }, label: 'Em7-shape Barre (11th fret)' },
     ],
     'Em7': [
         { name: 'Em7', frets: [0, 2, 0, 0, 0, 0], fingers: [0, 2, 0, 0, 0, 0], label: 'Open Position' },
         { name: 'Em7', frets: [0, 2, 2, 0, 3, 0], fingers: [0, 1, 2, 0, 4, 0], label: 'Open Position (alt)' },
         { name: 'Em7', frets: [-1, 7, 9, 7, 8, 7], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 7, from: 5, to: 1 }, label: 'Am7-shape Barre (7th fret)' },
         { name: 'Em7', frets: [0, 2, 2, 4, 3, 3], fingers: [0, 1, 1, 3, 2, 2], baseFret: 1, label: 'Upper voicing (open bass)' },
+        { name: 'Em7', frets: [12, 14, 12, 12, 12, 12], fingers: [1, 3, 1, 1, 1, 1], baseFret: 11, barre: { fret: 12, from: 6, to: 1 }, label: 'Em7-shape Barre (12th fret)' },
     ],
     'Fm7': [
         { name: 'Fm7', frets: [1, 3, 1, 1, 1, 1], fingers: [1, 3, 1, 1, 1, 1], barre: { fret: 1, from: 6, to: 1 }, label: 'Em7-shape Barre (1st fret)' },
         { name: 'Fm7', frets: [-1, 8, 10, 8, 9, 8], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 8, from: 5, to: 1 }, label: 'Am7-shape Barre (8th fret)' },
     ],
+    'F#m7': [
+        { name: 'F#m7', frets: [2, 4, 2, 2, 2, 2], fingers: [1, 3, 1, 1, 1, 1], baseFret: 1, barre: { fret: 2, from: 6, to: 1 }, label: 'Em7-shape Barre (2nd fret)' },
+        { name: 'F#m7', frets: [-1, 9, 11, 9, 10, 9], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 9, from: 5, to: 1 }, label: 'Am7-shape Barre (9th fret)' },
+    ],
     'Gm7': [
         { name: 'Gm7', frets: [3, 5, 3, 3, 3, 3], fingers: [1, 3, 1, 1, 1, 1], barre: { fret: 3, from: 6, to: 1 }, label: 'Em7-shape Barre (3rd fret)' },
         { name: 'Gm7', frets: [-1, 10, 12, 10, 11, 10], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 10, from: 5, to: 1 }, label: 'Am7-shape Barre (10th fret)' },
+    ],
+    'Abm7': [
+        { name: 'Abm7', frets: [4, 6, 4, 4, 4, 4], fingers: [1, 3, 1, 1, 1, 1], baseFret: 1, barre: { fret: 4, from: 6, to: 1 }, label: 'Em7-shape Barre (4th fret)' },
+        { name: 'Abm7', frets: [-1, 11, 13, 11, 12, 11], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 11, from: 5, to: 1 }, label: 'Am7-shape Barre (11th fret)' },
     ],
     'Am7': [
         { name: 'Am7', frets: [-1, 0, 2, 0, 1, 0], fingers: [0, 0, 2, 0, 1, 0], label: 'Open Position' },
         { name: 'Am7', frets: [5, 7, 5, 5, 5, 5], fingers: [1, 3, 1, 1, 1, 1], baseFret: 4, barre: { fret: 5, from: 6, to: 1 }, label: 'Em7-shape Barre (5th fret)' },
         { name: 'Am7', frets: [-1, 12, 14, 12, 13, 12], fingers: [0, 1, 3, 1, 2, 1], baseFret: 1, barre: { fret: 12, from: 5, to: 1 }, label: 'Am7-shape Barre (12th fret)' },
+        { name: 'Am7', frets: [-1, 0, 2, 0, 1, 3], fingers: [0, 0, 2, 0, 1, 3], label: 'Open with high G' },
+    ],
+    'Bbm7': [
+        { name: 'Bbm7', frets: [-1, 1, 3, 1, 2, 1], fingers: [0, 1, 3, 1, 2, 1], barre: { fret: 1, from: 5, to: 1 }, label: 'Am7-shape Barre (1st fret)' },
+        { name: 'Bbm7', frets: [6, 8, 6, 6, 6, 6], fingers: [1, 3, 1, 1, 1, 1], baseFret: 5, barre: { fret: 6, from: 6, to: 1 }, label: 'Em7-shape Barre (6th fret)' },
     ],
     'Bm7': [
         { name: 'Bm7', frets: [-1, 2, 4, 2, 3, 2], fingers: [0, 1, 3, 1, 2, 1], barre: { fret: 2, from: 5, to: 1 }, label: 'Am7-shape Barre (2nd fret)' },
         { name: 'Bm7', frets: [7, 9, 7, 7, 7, 7], fingers: [1, 3, 1, 1, 1, 1], baseFret: 6, barre: { fret: 7, from: 6, to: 1 }, label: 'Em7-shape Barre (7th fret)' },
+        { name: 'Bm7', frets: [-1, -1, 4, 4, 3, 2], fingers: [0, 0, 3, 4, 2, 1], label: 'Small shape (4th fret)' },
     ],
 
     // === SUS CHORDS ===
     'Asus2': [
         { name: 'Asus2', frets: [-1, 0, 2, 2, 0, 0], fingers: [0, 0, 1, 2, 0, 0], label: 'Open Position' },
         { name: 'Asus2', frets: [5, 7, 7, 7, 5, 5], fingers: [1, 2, 3, 4, 1, 1], baseFret: 4, barre: { fret: 5, from: 6, to: 1 }, label: 'Esus2-shape Barre (5th fret)' },
+        { name: 'Asus2', frets: [-1, 0, 2, 2, 0, 5], fingers: [0, 0, 1, 2, 0, 4], label: 'Open with high E' },
     ],
     'Asus4': [
         { name: 'Asus4', frets: [-1, 0, 2, 2, 3, 0], fingers: [0, 0, 1, 2, 3, 0], label: 'Open Position' },
@@ -404,25 +480,41 @@ const CHORD_VOICINGS = {
     'Dsus2': [
         { name: 'Dsus2', frets: [-1, -1, 0, 2, 3, 0], fingers: [0, 0, 0, 1, 3, 0], label: 'Open Position' },
         { name: 'Dsus2', frets: [-1, 5, 7, 7, 8, 5], fingers: [0, 1, 2, 3, 4, 1], baseFret: 1, barre: { fret: 5, from: 5, to: 1 }, label: 'Asus2-shape Barre (5th fret)' },
+        { name: 'Dsus2', frets: [10, 12, 12, 12, 10, 10], fingers: [1, 2, 3, 4, 1, 1], baseFret: 9, barre: { fret: 10, from: 6, to: 1 }, label: 'Esus2-shape Barre (10th fret)' },
     ],
     'Dsus4': [
         { name: 'Dsus4', frets: [-1, -1, 0, 2, 3, 3], fingers: [0, 0, 0, 1, 2, 3], label: 'Open Position' },
         { name: 'Dsus4', frets: [-1, 5, 7, 7, 8, 8], fingers: [0, 1, 2, 3, 4, 4], baseFret: 1, barre: { fret: 5, from: 5, to: 1 }, label: 'Asus4-shape Barre (5th fret)' },
+        { name: 'Dsus4', frets: [10, 12, 12, 12, 13, 10], fingers: [1, 2, 3, 4, 4, 1], baseFret: 9, barre: { fret: 10, from: 6, to: 1 }, label: 'Esus4-shape Barre (10th fret)' },
     ],
     'Esus2': [
         { name: 'Esus2', frets: [0, 2, 4, 4, 0, 0], fingers: [0, 1, 3, 4, 0, 0], label: 'Open Position' },
         { name: 'Esus2', frets: [0, 2, 2, 4, 0, 0], fingers: [0, 1, 2, 4, 0, 0], label: 'Simplified Open' },
+        { name: 'Esus2', frets: [-1, 7, 9, 9, 7, 7], fingers: [0, 1, 3, 4, 1, 1], baseFret: 1, barre: { fret: 7, from: 5, to: 1 }, label: 'Asus2-shape Barre (7th fret)' },
     ],
     'Esus4': [
         { name: 'Esus4', frets: [0, 2, 2, 2, 0, 0], fingers: [0, 1, 2, 3, 0, 0], label: 'Open Position' },
         { name: 'Esus4', frets: [0, 2, 2, 2, 0, 0], fingers: [0, 2, 3, 4, 0, 0], label: 'Open Position (alt fingers)' },
+        { name: 'Esus4', frets: [-1, 7, 9, 9, 10, 7], fingers: [0, 1, 2, 3, 4, 1], baseFret: 1, barre: { fret: 7, from: 5, to: 1 }, label: 'Asus4-shape Barre (7th fret)' },
     ],
     'Gsus2': [
         { name: 'Gsus2', frets: [3, 0, 0, 2, 3, 3], fingers: [2, 0, 0, 1, 3, 4], label: 'Open Position' },
+        { name: 'Gsus2', frets: [3, 5, 5, 5, 3, 3], fingers: [1, 2, 3, 4, 1, 1], baseFret: 2, barre: { fret: 3, from: 6, to: 1 }, label: 'Esus2-shape Barre (3rd fret)' },
     ],
     'Gsus4': [
         { name: 'Gsus4', frets: [3, 3, 0, 0, 1, 3], fingers: [2, 3, 0, 0, 1, 4], label: 'Open Position' },
         { name: 'Gsus4', frets: [3, 5, 5, 5, 3, 3], fingers: [1, 2, 3, 4, 1, 1], baseFret: 2, barre: { fret: 3, from: 6, to: 1 }, label: 'Esus4-shape Barre (3rd fret)' },
+        { name: 'Gsus4', frets: [-1, 10, 12, 12, 13, 10], fingers: [0, 1, 2, 3, 4, 1], baseFret: 1, barre: { fret: 10, from: 5, to: 1 }, label: 'Asus4-shape Barre (10th fret)' },
+    ],
+    'Csus2': [
+        { name: 'Csus2', frets: [-1, 3, 0, 0, 1, 3], fingers: [0, 3, 0, 0, 1, 4], label: 'Open Position' },
+        { name: 'Csus2', frets: [-1, 3, 5, 5, 3, 3], fingers: [0, 1, 3, 4, 1, 1], baseFret: 1, barre: { fret: 3, from: 5, to: 1 }, label: 'Asus2-shape Barre (3rd fret)' },
+        { name: 'Csus2', frets: [8, 10, 10, 10, 8, 8], fingers: [1, 2, 3, 4, 1, 1], baseFret: 7, barre: { fret: 8, from: 6, to: 1 }, label: 'Esus2-shape Barre (8th fret)' },
+    ],
+    'Csus4': [
+        { name: 'Csus4', frets: [-1, 3, 3, 0, 1, 1], fingers: [0, 3, 4, 0, 1, 1], label: 'Open Position' },
+        { name: 'Csus4', frets: [-1, 3, 5, 5, 6, 3], fingers: [0, 1, 2, 3, 4, 1], baseFret: 1, barre: { fret: 3, from: 5, to: 1 }, label: 'Asus4-shape Barre (3rd fret)' },
+        { name: 'Csus4', frets: [8, 10, 10, 10, 11, 8], fingers: [1, 2, 3, 4, 4, 1], baseFret: 7, barre: { fret: 8, from: 6, to: 1 }, label: 'Esus4-shape Barre (8th fret)' },
     ],
 };
 
