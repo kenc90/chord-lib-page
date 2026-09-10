@@ -511,6 +511,108 @@ body {
     color: #f5a623;
 }
 
+.shape-picker-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.72);
+    z-index: 1000;
+}
+
+.shape-picker-modal.active {
+    display: flex;
+}
+
+.shape-picker-dialog {
+    width: min(760px, 100%);
+    max-height: min(640px, 92vh);
+    overflow-y: auto;
+    padding: 1.25rem;
+    border: 1px solid rgba(245, 166, 35, 0.45);
+    border-radius: 8px;
+    background: #16213e;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.shape-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+}
+
+.shape-picker-header h2 {
+    color: #f5a623;
+    font-size: 1.1rem;
+}
+
+.close-shape-picker-btn {
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    background: transparent;
+    color: #a0a0a0;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.close-shape-picker-btn:hover {
+    color: #fff;
+}
+
+.shape-picker-hint {
+    color: #a0a0a0;
+    font-size: 0.8rem;
+    margin-bottom: 0.85rem;
+}
+
+.shape-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.7rem;
+}
+
+.shape-option {
+    display: block;
+    padding: 0.6rem 0.5rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.shape-option:hover {
+    border-color: rgba(245, 166, 35, 0.6);
+    background: rgba(245, 166, 35, 0.08);
+}
+
+.shape-option.selected {
+    border-color: #f5a623;
+    background: rgba(245, 166, 35, 0.15);
+}
+
+.shape-option-name {
+    margin-bottom: 0.4rem;
+    color: #72d2e2;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.shape-option .chord-diagram {
+    display: block;
+    margin: 0 auto;
+}
+
+.shape-option:hover .chord-diagram {
+    filter: drop-shadow(0 0 5px rgba(245, 166, 35, 0.75));
+}
+
 @media (max-width: 640px) {
     .songwriting-container {
         width: min(100% - 1rem, 1100px);

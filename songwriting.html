@@ -82,6 +82,17 @@
         </div>
     </div>
 
+    <div id="shape-picker-modal" class="shape-picker-modal" aria-hidden="true">
+        <div class="shape-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="shape-picker-title">
+            <div class="shape-picker-header">
+                <h2 id="shape-picker-title">Chord</h2>
+                <button id="close-shape-picker" class="close-shape-picker-btn" type="button" aria-label="Close">&times;</button>
+            </div>
+            <p class="shape-picker-hint" data-i18n="chooseShape">Choose a chord shape</p>
+            <div id="shape-picker-grid" class="shape-picker-grid"></div>
+        </div>
+    </div>
+
     <script src="i18n.js"></script>
     <script src="app.js"></script>
     <script src="songwriting.js"></script>

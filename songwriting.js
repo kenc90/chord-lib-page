@@ -67,13 +67,39 @@ function renderReference() {
         }).join('')
         : `<p class="empty-reference">${t('emptyChordReference')}</p>`;
     reference.querySelectorAll('.shape-diagram-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const shapes = getChordShapes(button.dataset.chord);
-            song.referenceShapes[button.dataset.chord] = ((song.referenceShapes[button.dataset.chord] || 0) + 1) % shapes.length;
-            saveSong();
-            renderReference();
-        });
+        button.addEventListener('click', () => openShapePicker(button.dataset.chord));
     });
+}
+
+let pickerChord = null;
+
+function openShapePicker(chordName) {
+    pickerChord = chordName;
+    renderShapeOptions();
+    document.getElementById('shape-picker-title').textContent = chordName;
+    const modal = document.getElementById('shape-picker-modal');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeShapePicker() {
+    const modal = document.getElementById('shape-picker-modal');
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    pickerChord = null;
+}
+
+function renderShapeOptions() {
+    const grid = document.getElementById('shape-picker-grid');
+    const shapes = getChordShapes(pickerChord);
+    const selectedIndex = Math.min(song.referenceShapes[pickerChord] || 0, shapes.length - 1);
+    grid.innerHTML = shapes.map((shape, index) => `<button class="shape-option${index === selectedIndex ? ' selected' : ''}" type="button" data-index="${index}" aria-pressed="${index === selectedIndex}" title="${escapeHtml(shape.label || '')}"><div class="shape-option-name">${shape.label || `${t('chordShape')} ${index + 1}`}</div>${chordDiagram(pickerChord, index)}</button>`).join('');
+    grid.querySelectorAll('.shape-option').forEach(option => option.addEventListener('click', () => {
+        song.referenceShapes[pickerChord] = Number(option.dataset.index);
+        saveSong();
+        closeShapePicker();
+        renderReference();
+    }));
 }
 
 function escapeHtml(value) {
@@ -324,8 +350,15 @@ document.getElementById('close-chord-finder').addEventListener('click', closeCho
 document.getElementById('chord-finder-modal').addEventListener('click', event => {
     if (event.target.id === 'chord-finder-modal') closeChordFinder();
 });
+document.getElementById('close-shape-picker').addEventListener('click', closeShapePicker);
+document.getElementById('shape-picker-modal').addEventListener('click', event => {
+    if (event.target.id === 'shape-picker-modal') closeShapePicker();
+});
 document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') closeChordFinder();
+    if (event.key === 'Escape') {
+        closeShapePicker();
+        closeChordFinder();
+    }
 });
 document.getElementById('export-btn').addEventListener('click', exportSong);
 document.getElementById('import-input').addEventListener('change', importSong);
