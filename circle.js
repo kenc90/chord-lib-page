@@ -204,10 +204,31 @@ function renderChordShape(chord, label) {
 // State
 let currentKey = 0;
 let currentMode = 0;
+let isDraggingCircle = false;
 
 // Get scale notes for a key and mode
 function getScaleNotes(key, mode) {
     return MODES[mode].intervals.map(interval => (key + interval) % 12);
+}
+
+function selectKey(noteIndex) {
+    if (noteIndex === currentKey) return;
+
+    currentKey = noteIndex;
+    document.querySelectorAll('.key-btn').forEach(button => button.classList.remove('active'));
+    const activeButton = document.querySelector(`.key-btn[data-key="${noteIndex}"]`);
+    if (activeButton) activeButton.classList.add('active');
+    updateAll();
+}
+
+function getDraggedCircleKey(event, svg) {
+    const point = svg.createSVGPoint();
+    point.x = event.clientX;
+    point.y = event.clientY;
+    const position = point.matrixTransform(svg.getScreenCTM().inverse());
+    const angle = Math.atan2(position.y - 300, position.x - 300) * 180 / Math.PI;
+    const segmentIndex = Math.floor((angle + 450) % 360 / 30);
+    return CIRCLE_ORDER[segmentIndex];
 }
 
 // Render the circle of fifths SVG
@@ -290,16 +311,31 @@ function renderCircle() {
 
     svg.innerHTML = html;
 
+    svg.onpointerdown = event => {
+        if (!event.target.classList.contains('circle-segment')) return;
+        isDraggingCircle = true;
+        svg.setPointerCapture(event.pointerId);
+        selectKey(getDraggedCircleKey(event, svg));
+    };
+
+    svg.onpointermove = event => {
+        if (isDraggingCircle) selectKey(getDraggedCircleKey(event, svg));
+    };
+
+    svg.onpointerup = event => {
+        isDraggingCircle = false;
+        if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId);
+    };
+
+    svg.onpointercancel = () => {
+        isDraggingCircle = false;
+    };
+
     // Add click handlers to segments
     svg.querySelectorAll('.circle-segment').forEach(segment => {
         segment.addEventListener('click', () => {
             const noteIndex = parseInt(segment.dataset.note);
-            currentKey = noteIndex;
-            // Update key button active state
-            document.querySelectorAll('.key-btn').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.querySelector(`.key-btn[data-key="${noteIndex}"]`);
-            if (activeBtn) activeBtn.classList.add('active');
-            updateAll();
+            selectKey(noteIndex);
         });
     });
 }

@@ -80,6 +80,9 @@
     width: 100%;
     max-width: 500px;
     height: auto;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* SVG Circle Styles */
@@ -105,6 +108,10 @@
 
 .circle-segment:hover {
     fill: rgba(245, 166, 35, 0.15);
+}
+
+#circle-svg:active .circle-segment {
+    cursor: grabbing;
 }
 
 .circle-segment.active {
