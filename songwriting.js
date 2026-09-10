@@ -1,8 +1,11 @@
 const SONG_STORAGE_KEY = 'guitar-chords-library-song-draft';
 
-let song = { title: '', key: '', bpm: '', lyricsHtml: '', referenceShapes: {} };
+let song = { title: '', keys: [], bpm: '', lyricsHtml: '', referenceShapes: {} };
 let savedSelection = null;
 let pendingChordRange = null;
+let pendingKeys = [];
+
+const SONG_KEYS = ['C', 'Cm', 'C#', 'C#m', 'D', 'Dm', 'Eb', 'Ebm', 'E', 'Em', 'F', 'Fm', 'F#', 'F#m', 'G', 'Gm', 'Ab', 'Abm', 'A', 'Am', 'Bb', 'Bbm', 'B', 'Bm'];
 
 const CHORD_CHOICES = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'].flatMap(note => [note, `${note}m`, `${note}7`, `${note}maj7`, `${note}m7`, `${note}sus4`]);
 
@@ -28,10 +31,10 @@ function loadSong() {
     try {
         const savedSong = JSON.parse(localStorage.getItem(SONG_STORAGE_KEY));
         if (typeof savedSong?.lyricsHtml === 'string') {
-            song = { title: String(savedSong.title || ''), key: String(savedSong.key || ''), bpm: String(savedSong.bpm || ''), lyricsHtml: savedSong.lyricsHtml, referenceShapes: savedSong.referenceShapes || {} };
+            song = { title: String(savedSong.title || ''), keys: normalizeKeys(savedSong.keys ?? savedSong.key), bpm: String(savedSong.bpm || ''), lyricsHtml: savedSong.lyricsHtml, referenceShapes: savedSong.referenceShapes || {} };
         } else if (savedSong?.lines?.length) {
             song = {
-                title: String(savedSong.title || ''), key: '', bpm: '', referenceShapes: {},
+                title: String(savedSong.title || ''), keys: [], bpm: '', referenceShapes: {},
                 lyricsHtml: savedSong.lines.map(line => `<div>${escapeHtml(String(line.lyrics || ''))}</div>`).join('')
             };
         }
@@ -131,18 +134,29 @@ function updateSnapIndicator(event) {
 
 function renderChordChoices() {
     const query = document.getElementById('chord-finder-search').value.trim().toLowerCase();
-    const keyIndex = { C: 0, 'C#': 1, D: 2, Eb: 3, E: 4, F: 5, 'F#': 6, G: 7, Ab: 8, A: 9, Bb: 10, B: 11 }[song.key];
     const notes = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
-    const relatedChords = keyIndex === undefined
-        ? []
-        : [
-            notes[keyIndex],
-            `${notes[(keyIndex + 2) % 12]}m`,
-            `${notes[(keyIndex + 4) % 12]}m`,
-            notes[(keyIndex + 5) % 12],
-            notes[(keyIndex + 7) % 12],
-            `${notes[(keyIndex + 9) % 12]}m`
-        ];
+    const relatedChords = song.keys.flatMap(key => {
+        const isMinor = key.endsWith('m');
+        const keyIndex = notes.indexOf(isMinor ? key.slice(0, -1) : key);
+        if (keyIndex === -1) return [];
+        return isMinor
+            ? [
+                `${notes[keyIndex]}m`,
+                `${notes[(keyIndex + 2) % 12]}m`,
+                `${notes[(keyIndex + 3) % 12]}`,
+                `${notes[(keyIndex + 5) % 12]}m`,
+                `${notes[(keyIndex + 7) % 12]}m`,
+                `${notes[(keyIndex + 8) % 12]}`
+            ]
+            : [
+                notes[keyIndex],
+                `${notes[(keyIndex + 2) % 12]}m`,
+                `${notes[(keyIndex + 4) % 12]}m`,
+                notes[(keyIndex + 5) % 12],
+                notes[(keyIndex + 7) % 12],
+                `${notes[(keyIndex + 9) % 12]}m`
+            ];
+    });
     const choices = CHORD_CHOICES.filter(chord => chord.toLowerCase().includes(query));
     const related = choices.filter(chord => relatedChords.includes(chord));
     const other = choices.filter(chord => !relatedChords.includes(chord));
@@ -212,7 +226,7 @@ function importSong(event) {
         try {
             const importedSong = JSON.parse(reader.result);
             if (typeof importedSong.lyricsHtml !== 'string') throw new Error('Invalid song');
-            song = { title: String(importedSong.title || ''), key: String(importedSong.key || ''), bpm: String(importedSong.bpm || ''), lyricsHtml: importedSong.lyricsHtml, referenceShapes: importedSong.referenceShapes || {} };
+            song = { title: String(importedSong.title || ''), keys: normalizeKeys(importedSong.keys ?? importedSong.key), bpm: String(importedSong.bpm || ''), lyricsHtml: importedSong.lyricsHtml, referenceShapes: importedSong.referenceShapes || {} };
             document.getElementById('song-title').value = song.title;
             saveSong();
             renderSong();
@@ -224,9 +238,44 @@ function importSong(event) {
     event.target.value = '';
 }
 
+function normalizeKeys(value) {
+    const list = Array.isArray(value) ? value : (value ? [value] : []);
+    return [...new Set(list.filter(key => SONG_KEYS.includes(key)))];
+}
+
+function renderSongKeyButton() {
+    const button = document.getElementById('song-key-btn');
+    button.textContent = song.keys.length ? song.keys.join(' · ') : '-';
+}
+
+function renderSongKeyOptions() {
+    const container = document.getElementById('song-key-options');
+    container.innerHTML = SONG_KEYS.map(key => `<button class="song-key-option${pendingKeys.includes(key) ? ' selected' : ''}" type="button" data-key="${key}" aria-pressed="${pendingKeys.includes(key)}">${key}</button>`).join('');
+    container.querySelectorAll('.song-key-option').forEach(option => option.addEventListener('click', () => {
+        const key = option.dataset.key;
+        pendingKeys = pendingKeys.includes(key) ? pendingKeys.filter(k => k !== key) : [...pendingKeys, key];
+        renderSongKeyOptions();
+    }));
+}
+
+function openSongKeyModal() {
+    pendingKeys = [...song.keys];
+    renderSongKeyOptions();
+    const modal = document.getElementById('song-key-modal');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeSongKeyModal() {
+    const modal = document.getElementById('song-key-modal');
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    pendingKeys = [];
+}
+
 function renderSong() {
     document.getElementById('song-title').value = song.title;
-    document.getElementById('song-key').value = song.key;
+    renderSongKeyButton();
     document.getElementById('song-bpm').value = song.bpm;
     song.lyricsHtml = normalizeLyricsHtml(song.lyricsHtml);
     document.getElementById('lyrics-sheet').innerHTML = song.lyricsHtml;
@@ -238,9 +287,20 @@ document.getElementById('song-title').addEventListener('input', event => {
     song.title = event.target.value;
     saveSong();
 });
-document.getElementById('song-key').addEventListener('change', event => {
-    song.key = event.target.value;
+document.getElementById('song-key-btn').addEventListener('click', openSongKeyModal);
+document.getElementById('close-song-key').addEventListener('click', closeSongKeyModal);
+document.getElementById('song-key-modal').addEventListener('click', event => {
+    if (event.target.id === 'song-key-modal') closeSongKeyModal();
+});
+document.getElementById('clear-song-keys').addEventListener('click', () => {
+    pendingKeys = [];
+    renderSongKeyOptions();
+});
+document.getElementById('apply-song-keys').addEventListener('click', () => {
+    song.keys = [...pendingKeys];
     saveSong();
+    renderSongKeyButton();
+    closeSongKeyModal();
 });
 document.getElementById('song-bpm').addEventListener('input', event => {
     song.bpm = event.target.value;
