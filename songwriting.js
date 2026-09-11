@@ -274,6 +274,29 @@ function renderSongKeyButton() {
     button.textContent = song.keys.length ? song.keys.join(' · ') : '-';
 }
 
+const NOTE_REFERENCE_NOTES = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+const NOTE_REFERENCE_SCALES = {
+    major: [0, 2, 4, 5, 7, 9, 11],
+    minor: [0, 2, 3, 5, 7, 8, 10]
+};
+
+function renderNoteReference() {
+    const container = document.getElementById('note-reference');
+    if (!song.keys.length) {
+        container.innerHTML = `<p class="empty-reference">${t('emptyNoteReference')}</p>`;
+        return;
+    }
+    container.innerHTML = song.keys.map(key => {
+        const isMinor = key.endsWith('m');
+        const root = isMinor ? key.slice(0, -1) : key;
+        const rootIndex = NOTE_REFERENCE_NOTES.indexOf(root);
+        if (rootIndex === -1) return '';
+        const intervals = isMinor ? NOTE_REFERENCE_SCALES.minor : NOTE_REFERENCE_SCALES.major;
+        const notes = intervals.map(interval => NOTE_REFERENCE_NOTES[(rootIndex + interval) % 12]);
+        return `<div class="note-key-group"><span class="note-key-name">${escapeHtml(key)}</span><div class="note-key-chips">${notes.map((note, i) => `<span class="note-chip${i === 0 ? ' root' : ''}">${note}</span>`).join('')}</div></div>`;
+    }).join('');
+}
+
 function renderSongKeyOptions() {
     const container = document.getElementById('song-key-options');
     container.innerHTML = SONG_KEYS.map(key => `<button class="song-key-option${pendingKeys.includes(key) ? ' selected' : ''}" type="button" data-key="${key}" aria-pressed="${pendingKeys.includes(key)}">${key}</button>`).join('');
@@ -307,6 +330,7 @@ function renderSong() {
     document.getElementById('lyrics-sheet').innerHTML = song.lyricsHtml;
     document.getElementById('lyrics-sheet').insertAdjacentHTML('beforeend', '<span class="chord-snap-indicator" contenteditable="false"></span>');
     renderReference();
+    renderNoteReference();
 }
 
 document.getElementById('song-title').addEventListener('input', event => {
@@ -326,6 +350,7 @@ document.getElementById('apply-song-keys').addEventListener('click', () => {
     song.keys = [...pendingKeys];
     saveSong();
     renderSongKeyButton();
+    renderNoteReference();
     closeSongKeyModal();
 });
 document.getElementById('song-bpm').addEventListener('input', event => {

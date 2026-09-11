@@ -8,6 +8,7 @@ body {
 }
 
 .chord-reference-panel,
+.note-reference-panel,
 .song-editor-panel {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -122,6 +123,58 @@ body {
 .reference-diagram .base-fret {
     fill: #f5a623;
     font: 700 10px ui-monospace, Consolas, monospace;
+}
+
+.note-reference-panel {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.note-reference {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.note-key-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.note-key-name {
+    min-width: 2.6rem;
+    color: #f5a623;
+    font: 700 0.95rem ui-monospace, Consolas, monospace;
+}
+
+.note-key-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.note-reference .empty-reference {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+}
+
+.note-chip {
+    min-width: 2.4rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid rgba(114, 210, 226, 0.35);
+    border-radius: 6px;
+    background: rgba(15, 52, 96, 0.35);
+    color: #72d2e2;
+    font: 700 0.95rem ui-monospace, Consolas, monospace;
+    text-align: center;
+}
+
+.note-chip.root {
+    border-color: #f5a623;
+    background: rgba(245, 166, 35, 0.15);
+    color: #f5a623;
 }
 
 .song-editor-panel {
