@@ -162,18 +162,37 @@ body {
 
 .note-chip {
     min-width: 2.4rem;
-    padding: 0.35rem 0.6rem;
+    padding: 0.3rem 0.6rem;
     border: 1px solid rgba(114, 210, 226, 0.35);
     border-radius: 6px;
     background: rgba(15, 52, 96, 0.35);
     color: #72d2e2;
     font: 700 0.95rem ui-monospace, Consolas, monospace;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.note-chip-note {
+    line-height: 1.1;
+}
+
+.note-chip-chord {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #a0c4d8;
+    line-height: 1.1;
 }
 
 .note-chip.root {
     border-color: #f5a623;
     background: rgba(245, 166, 35, 0.15);
+    color: #f5a623;
+}
+
+.note-chip.root .note-chip-chord {
     color: #f5a623;
 }
 

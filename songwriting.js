@@ -276,8 +276,8 @@ function renderSongKeyButton() {
 
 const NOTE_REFERENCE_NOTES = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
 const NOTE_REFERENCE_SCALES = {
-    major: [0, 2, 4, 5, 7, 9, 11],
-    minor: [0, 2, 3, 5, 7, 8, 10]
+    major: { intervals: [0, 2, 4, 5, 7, 9, 11], types: ['maj', 'min', 'min', 'maj', 'maj', 'min', 'dim'] },
+    minor: { intervals: [0, 2, 3, 5, 7, 8, 10], types: ['min', 'dim', 'maj', 'min', 'min', 'maj', 'maj'] }
 };
 
 function renderNoteReference() {
@@ -291,9 +291,14 @@ function renderNoteReference() {
         const root = isMinor ? key.slice(0, -1) : key;
         const rootIndex = NOTE_REFERENCE_NOTES.indexOf(root);
         if (rootIndex === -1) return '';
-        const intervals = isMinor ? NOTE_REFERENCE_SCALES.minor : NOTE_REFERENCE_SCALES.major;
-        const notes = intervals.map(interval => NOTE_REFERENCE_NOTES[(rootIndex + interval) % 12]);
-        return `<div class="note-key-group"><span class="note-key-name">${escapeHtml(key)}</span><div class="note-key-chips">${notes.map((note, i) => `<span class="note-chip${i === 0 ? ' root' : ''}">${note}</span>`).join('')}</div></div>`;
+        const scale = isMinor ? NOTE_REFERENCE_SCALES.minor : NOTE_REFERENCE_SCALES.major;
+        const notes = scale.intervals.map(interval => NOTE_REFERENCE_NOTES[(rootIndex + interval) % 12]);
+        const chords = notes.map((note, i) => {
+            const type = scale.types[i];
+            const suffix = type === 'maj' ? '' : type === 'min' ? 'm' : 'dim';
+            return `${note}${suffix}`;
+        });
+        return `<div class="note-key-group"><span class="note-key-name">${escapeHtml(key)}</span><div class="note-key-chips">${notes.map((note, i) => `<span class="note-chip${i === 0 ? ' root' : ''}"><span class="note-chip-note">${note}</span><span class="note-chip-chord">${chords[i]}</span></span>`).join('')}</div></div>`;
     }).join('');
 }
 
