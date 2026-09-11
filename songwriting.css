@@ -96,8 +96,8 @@ body {
 
 .reference-diagram {
     display: block;
-    width: 120px;
-    height: 150px;
+    width: 130px;
+    height: 162px;
     margin: 0 auto;
 }
 
@@ -123,6 +123,20 @@ body {
 .reference-diagram .base-fret {
     fill: #f5a623;
     font: 700 10px ui-monospace, Consolas, monospace;
+}
+
+.reference-diagram .reference-diagram-note text {
+    fill: #72d2e2;
+    font: 700 14px ui-monospace, Consolas, monospace;
+    letter-spacing: 0.5px;
+}
+
+.reference-diagram .reference-diagram-note.out-of-scale text {
+    fill: #e94560;
+}
+
+.reference-diagram .reference-diagram-note.out-of-scale {
+    cursor: help;
 }
 
 .note-reference-panel {

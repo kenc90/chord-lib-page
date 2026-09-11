@@ -12,9 +12,52 @@ const CHORD_CHOICES = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb
 function chordDiagram(chordName, shapeIndex = 0) {
     const shape = getChordShapes(chordName)[shapeIndex];
     if (!shape) return '';
-    return renderChordDiagram(shape)
+    const svg = renderChordDiagram(shape)
         .replace('class="chord-diagram"', 'class="chord-diagram reference-diagram"')
+        .replace('viewBox="0 0 120 150"', 'viewBox="0 0 130 162"')
         .replace('<svg ', `<svg aria-label="${chordName} chord diagram" `);
+    return svg.replace('</svg>', `${chordNotesSvg(shape)}</svg>`);
+}
+
+// Standard tuning open-string notes (low E to high E)
+const CHORD_REFERENCE_OPEN_NOTES = ['E', 'A', 'D', 'G', 'B', 'E'];
+
+function getSongScaleNotes() {
+    const scaleNotes = new Set();
+    song.keys.forEach(key => {
+        const isMinor = key.endsWith('m');
+        const root = isMinor ? key.slice(0, -1) : key;
+        const rootIndex = NOTE_REFERENCE_NOTES.indexOf(root);
+        if (rootIndex === -1) return;
+        const intervals = (isMinor ? NOTE_REFERENCE_SCALES.minor : NOTE_REFERENCE_SCALES.major).intervals;
+        intervals.forEach(interval => scaleNotes.add(NOTE_REFERENCE_NOTES[(rootIndex + interval) % 12]));
+    });
+    return scaleNotes;
+}
+
+function chordNotesSvg(shape) {
+    const notes = [];
+    shape.frets.forEach((fret, i) => {
+        if (fret < 0) return;
+        const openIndex = CHORD_REFERENCE_OPEN_NOTES[i];
+        const openNoteIndex = NOTE_REFERENCE_NOTES.indexOf(openIndex);
+        notes.push(NOTE_REFERENCE_NOTES[(openNoteIndex + fret) % 12]);
+    });
+    const uniqueNotes = [...new Set(notes)];
+    const scaleNotes = getSongScaleNotes();
+    const charWidth = 9;
+    const gap = 6;
+    const totalWidth = uniqueNotes.reduce((sum, note) => sum + note.length * charWidth, 0) + gap * (uniqueNotes.length - 1);
+    let cursor = 65 - totalWidth / 2;
+    const text = uniqueNotes.map(note => {
+        const inScale = scaleNotes.has(note);
+        const width = note.length * charWidth;
+        const x = cursor + width / 2;
+        cursor += width + gap;
+        const tooltip = inScale ? '' : `<title>${t('noteNotInKey')}</title>`;
+        return `<g class="reference-diagram-note${inScale ? '' : ' out-of-scale'}"${inScale ? '' : ` data-tooltip="${t('noteNotInKey')}"`}><text x="${x}" y="154" text-anchor="middle" dominant-baseline="middle">${tooltip}${note}</text></g>`;
+    }).join('');
+    return text;
 }
 
 function getChordShapes(chordName) {
