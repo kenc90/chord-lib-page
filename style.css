@@ -181,6 +181,133 @@ header h1 {
     color: #1a1a2e;
 }
 
+/* Mobile Navigation */
+.mobile-nav-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0;
+    border: 1px solid rgba(245, 166, 35, 0.4);
+    border-radius: 6px;
+    background: rgba(245, 166, 35, 0.12);
+    color: #f5a623;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.mobile-nav-button:hover {
+    background: rgba(245, 166, 35, 0.22);
+}
+
+.mobile-nav-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-nav-modal[hidden] {
+    display: none;
+}
+
+.mobile-nav-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+}
+
+.mobile-nav-dialog {
+    position: relative;
+    min-width: 240px;
+    max-width: 90vw;
+    padding: 1.5rem;
+    border: 1px solid rgba(245, 166, 35, 0.4);
+    border-radius: 12px;
+    background: #1a1a2e;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.mobile-nav-title {
+    font-size: 1.1rem;
+    color: #f5a623;
+    margin-bottom: 1rem;
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mobile-nav-link {
+    display: block;
+    padding: 0.7rem 1rem;
+    border: 1px solid rgba(245, 166, 35, 0.3);
+    border-radius: 8px;
+    background: transparent;
+    color: #e0e0e0;
+    font: inherit;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.mobile-nav-link:hover {
+    background: rgba(245, 166, 35, 0.15);
+    border-color: rgba(245, 166, 35, 0.6);
+}
+
+.mobile-nav-link.active {
+    background: #f5a623;
+    color: #1a1a2e;
+    font-weight: 600;
+}
+
+.mobile-nav-close {
+    margin-top: 1rem;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: rgba(233, 69, 96, 0.2);
+    color: #e94560;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.mobile-nav-close:hover {
+    background: rgba(233, 69, 96, 0.35);
+}
+
+@media (max-width: 768px) {
+    .main-nav {
+        display: none;
+    }
+
+    .mobile-nav-button {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-nav-button {
+        top: 0.6rem;
+        left: 0.6rem;
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+}
+
 /* Category Navigation */
 .categories {
     display: flex;
