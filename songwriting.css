@@ -69,6 +69,12 @@ body {
     border-radius: 6px;
     background: rgba(15, 52, 96, 0.35);
     text-align: center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reference-chord:has(.shape-diagram-btn:hover) {
+    border-color: #f5a623;
+    box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.35);
 }
 
 .reference-chord-name {
@@ -85,11 +91,6 @@ body {
     background: transparent;
     padding: 0;
     cursor: pointer;
-}
-
-.shape-diagram-btn:hover .reference-diagram,
-.shape-diagram-btn:focus-visible .reference-diagram {
-    filter: drop-shadow(0 0 5px rgba(245, 166, 35, 0.75));
 }
 
 .reference-diagram {
@@ -607,10 +608,6 @@ body {
 .shape-option .chord-diagram {
     display: block;
     margin: 0 auto;
-}
-
-.shape-option:hover .chord-diagram {
-    filter: drop-shadow(0 0 5px rgba(245, 166, 35, 0.75));
 }
 
 @media (max-width: 640px) {
