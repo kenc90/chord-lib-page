@@ -50,13 +50,14 @@
                     <input id="song-bpm" type="number" min="20" max="300" inputmode="numeric" aria-label="BPM">
                 </div>
                 <div class="song-actions">
+                    <button id="new-song-btn" class="song-action-btn" type="button" data-i18n="newSong">New Song</button>
                     <button id="export-btn" class="song-action-btn" type="button" data-i18n="exportJson">Export JSON</button>
                     <label class="song-action-btn import-btn" for="import-input" data-i18n="importJson">Import JSON</label>
                     <input id="import-input" type="file" accept="application/json" hidden>
                 </div>
             </div>
 
-            <div id="lyrics-sheet" class="lyrics-sheet" contenteditable="true" role="textbox" aria-multiline="true" data-i18n-placeholder="lyricPlaceholder" aria-label="Lyrics editor"></div>
+            <div id="lyrics-sheet" class="lyrics-sheet" contenteditable="true" role="textbox" aria-multiline="true" data-i18n-placeholder="lyricPlaceholder" data-drop-hint="Drop JSON here" aria-label="Lyrics editor"></div>
         </section>
     </main>
 
@@ -99,6 +100,20 @@
             </div>
             <p class="shape-picker-hint" data-i18n="chooseShape">Choose a chord shape</p>
             <div id="shape-picker-grid" class="shape-picker-grid"></div>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="confirm-modal" aria-hidden="true">
+        <div class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+            <div class="confirm-header">
+                <h2 id="confirm-title" data-i18n="confirmTitle">Confirm</h2>
+                <button id="close-confirm" class="close-confirm-btn" type="button" aria-label="Close">&times;</button>
+            </div>
+            <p id="confirm-message" class="confirm-message"></p>
+            <div class="confirm-footer">
+                <button id="confirm-cancel" class="confirm-cancel-btn" type="button" data-i18n="cancel">Cancel</button>
+                <button id="confirm-ok" class="confirm-ok-btn" type="button" data-i18n="confirm">Confirm</button>
+            </div>
         </div>
     </div>
 

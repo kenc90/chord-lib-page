@@ -287,24 +287,90 @@ function exportSong() {
     URL.revokeObjectURL(link.href);
 }
 
+function hasSongContent() {
+    const sheet = document.getElementById('lyrics-sheet');
+    const hasLyrics = sheet.textContent.trim().length > 0;
+    const hasTitle = song.title.trim().length > 0;
+    const hasKeys = song.keys.length > 0;
+    const hasBpm = song.bpm.trim().length > 0;
+    return hasLyrics || hasTitle || hasKeys || hasBpm;
+}
+
+function applyImportedSong(importedSong) {
+    if (typeof importedSong.lyricsHtml !== 'string') throw new Error('Invalid song');
+    song = { title: String(importedSong.title || ''), keys: normalizeKeys(importedSong.keys ?? importedSong.key), bpm: String(importedSong.bpm || ''), lyricsHtml: importedSong.lyricsHtml, referenceShapes: importedSong.referenceShapes || {} };
+    document.getElementById('song-title').value = song.title;
+    saveSong();
+    renderSong();
+}
+
+let confirmCallback = null;
+
+function showConfirmModal(message, onConfirm) {
+    document.getElementById('confirm-message').textContent = message;
+    document.getElementById('confirm-ok').textContent = t('confirm');
+    confirmCallback = onConfirm;
+    const modal = document.getElementById('confirm-modal');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeConfirmModal() {
+    const modal = document.getElementById('confirm-modal');
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    confirmCallback = null;
+}
+
+function showAlertModal(message) {
+    document.getElementById('confirm-message').textContent = message;
+    document.getElementById('confirm-ok').textContent = t('close');
+    confirmCallback = null;
+    const modal = document.getElementById('confirm-modal');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function confirmModal(message) {
+    return new Promise(resolve => {
+        showConfirmModal(message, resolve);
+    });
+}
+
+function importSongText(text) {
+    try {
+        const importedSong = JSON.parse(text);
+        if (hasSongContent()) {
+            showConfirmModal(t('confirmOverwriteSong'), () => applyImportedSong(importedSong));
+        } else {
+            applyImportedSong(importedSong);
+        }
+    } catch {
+        showAlertModal(t('invalidSongFile'));
+    }
+}
+
 function importSong(event) {
     const file = event.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => {
-        try {
-            const importedSong = JSON.parse(reader.result);
-            if (typeof importedSong.lyricsHtml !== 'string') throw new Error('Invalid song');
-            song = { title: String(importedSong.title || ''), keys: normalizeKeys(importedSong.keys ?? importedSong.key), bpm: String(importedSong.bpm || ''), lyricsHtml: importedSong.lyricsHtml, referenceShapes: importedSong.referenceShapes || {} };
-            document.getElementById('song-title').value = song.title;
-            saveSong();
-            renderSong();
-        } catch {
-            alert(t('invalidSongFile'));
-        }
-    };
+    reader.onload = () => importSongText(reader.result);
     reader.readAsText(file);
     event.target.value = '';
+}
+
+function newSong() {
+    if (hasSongContent()) {
+        showConfirmModal(t('confirmNewSong'), () => {
+            song = { title: '', keys: [], bpm: '', lyricsHtml: '', referenceShapes: {} };
+            saveSong();
+            renderSong();
+        });
+    } else {
+        song = { title: '', keys: [], bpm: '', lyricsHtml: '', referenceShapes: {} };
+        saveSong();
+        renderSong();
+    }
 }
 
 function normalizeKeys(value) {
@@ -418,6 +484,33 @@ document.getElementById('lyrics-sheet').addEventListener('click', event => {
 document.getElementById('lyrics-sheet').addEventListener('mousedown', openChordFinder);
 document.getElementById('lyrics-sheet').addEventListener('pointermove', updateSnapIndicator);
 document.getElementById('lyrics-sheet').addEventListener('pointerleave', () => document.querySelector('.chord-snap-indicator')?.classList.remove('visible'));
+document.getElementById('lyrics-sheet').addEventListener('dragenter', event => {
+    event.preventDefault();
+    if (event.dataTransfer.types.includes('Files')) {
+        document.getElementById('lyrics-sheet').classList.add('drag-over');
+    }
+});
+document.getElementById('lyrics-sheet').addEventListener('dragover', event => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+    if (event.dataTransfer.types.includes('Files')) {
+        document.getElementById('lyrics-sheet').classList.add('drag-over');
+    }
+});
+document.getElementById('lyrics-sheet').addEventListener('dragleave', event => {
+    if (!document.getElementById('lyrics-sheet').contains(event.relatedTarget)) {
+        document.getElementById('lyrics-sheet').classList.remove('drag-over');
+    }
+});
+document.getElementById('lyrics-sheet').addEventListener('drop', event => {
+    event.preventDefault();
+    document.getElementById('lyrics-sheet').classList.remove('drag-over');
+    const file = event.dataTransfer.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => importSongText(reader.result);
+    reader.readAsText(file);
+});
 document.getElementById('chord-finder-search').addEventListener('input', renderChordChoices);
 document.getElementById('close-chord-finder').addEventListener('click', closeChordFinder);
 document.getElementById('chord-finder-modal').addEventListener('click', event => {
@@ -431,10 +524,22 @@ document.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
         closeShapePicker();
         closeChordFinder();
+        closeConfirmModal();
     }
 });
 document.getElementById('export-btn').addEventListener('click', exportSong);
+document.getElementById('new-song-btn').addEventListener('click', newSong);
 document.getElementById('import-input').addEventListener('change', importSong);
+document.getElementById('confirm-ok').addEventListener('click', () => {
+    const callback = confirmCallback;
+    closeConfirmModal();
+    if (callback) callback(true);
+});
+document.getElementById('confirm-cancel').addEventListener('click', closeConfirmModal);
+document.getElementById('close-confirm').addEventListener('click', closeConfirmModal);
+document.getElementById('confirm-modal').addEventListener('click', event => {
+    if (event.target.id === 'confirm-modal') closeConfirmModal();
+});
 document.addEventListener('languagechange', renderSong);
 
 loadSong();

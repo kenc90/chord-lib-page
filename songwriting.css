@@ -464,6 +464,23 @@ body {
     pointer-events: none;
 }
 
+.lyrics-sheet.drag-over::after {
+    content: attr(data-drop-hint);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(245, 166, 35, 0.12);
+    border: 2px dashed #f5a623;
+    border-radius: 8px;
+    color: #f5a623;
+    font-size: 1.1rem;
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 5;
+}
+
 .chord-annotation {
     position: relative;
     display: inline;
@@ -694,6 +711,100 @@ body {
 .shape-option .chord-diagram {
     display: block;
     margin: 0 auto;
+}
+
+/* Confirm Modal */
+.confirm-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.72);
+    z-index: 1200;
+}
+
+.confirm-modal.active {
+    display: flex;
+}
+
+.confirm-dialog {
+    width: min(420px, 100%);
+    padding: 1.25rem;
+    border: 1px solid rgba(245, 166, 35, 0.45);
+    border-radius: 8px;
+    background: #16213e;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.confirm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.confirm-header h2 {
+    font-size: 1.1rem;
+    color: #f5a623;
+}
+
+.close-confirm-btn {
+    border: none;
+    background: transparent;
+    color: #a0a0a0;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0.25rem;
+}
+
+.close-confirm-btn:hover {
+    color: #e94560;
+}
+
+.confirm-message {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.confirm-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.confirm-cancel-btn,
+.confirm-ok-btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.confirm-cancel-btn {
+    border: 1px solid rgba(233, 69, 96, 0.5);
+    background: transparent;
+    color: #e94560;
+}
+
+.confirm-cancel-btn:hover {
+    background: rgba(233, 69, 96, 0.15);
+}
+
+.confirm-ok-btn {
+    border: none;
+    background: #f5a623;
+    color: #1a1a2e;
+}
+
+.confirm-ok-btn:hover {
+    background: #ffb84d;
 }
 
 @media (max-width: 640px) {
